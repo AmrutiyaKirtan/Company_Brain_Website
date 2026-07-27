@@ -1,26 +1,347 @@
 @import "tailwindcss";
 
+/* ─── Design Tokens ────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #18130f;
+  --black: #100c09;
+  --paper: #e9e0cd;
+  --white: #f1e9d8;
+  --muted-on-light: #5e5544;
+  --muted-on-dark: #b7a98c;
+  --line-on-light: rgba(24, 19, 15, 0.16);
+  --line-on-light-strong: rgba(24, 19, 15, 0.3);
+  --line-on-dark: rgba(241, 233, 216, 0.16);
+  --line-on-dark-strong: rgba(241, 233, 216, 0.32);
 }
 
+/* ─── Tailwind v4 Theme ────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-black: var(--black);
+  --color-paper: var(--paper);
+  --color-white: var(--white);
+  --color-muted-on-light: var(--muted-on-light);
+  --color-muted-on-dark: var(--muted-on-dark);
+  --color-line-on-light: var(--line-on-light);
+  --color-line-on-light-strong: var(--line-on-light-strong);
+  --color-line-on-dark: var(--line-on-dark);
+  --color-line-on-dark-strong: var(--line-on-dark-strong);
+
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-ibm-plex-mono);
+  --font-body: var(--font-dm-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ─────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--white);
+}
+
+/* ─── Scroll Progress Bar ──────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: transparent;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: var(--white);
+  transform-origin: left;
+  transform: scaleX(0);
+  mix-blend-mode: difference;
+}
+
+/* ─── Shiny Text ───────────────────────────────────── */
+.shine {
+  background-image: linear-gradient(
+    100deg,
+    var(--ink) 30%,
+    var(--ink) 42%,
+    #c9bfa4 49%,
+    #fff8ea 51%,
+    #c9bfa4 53%,
+    var(--ink) 60%,
+    var(--ink) 100%
+  );
+  background-size: 260% 100%;
+  background-position: 120% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation:
+    sweep 5.5s ease-in-out 1s 1 both,
+    sweep-loop 7s ease-in-out 9.5s infinite;
+}
+
+@keyframes sweep {
+  0% {
+    background-position: 160% 0;
+  }
+  55% {
+    background-position: -40% 0;
+  }
+  100% {
+    background-position: -40% 0;
+  }
+}
+
+@keyframes sweep-loop {
+  0%,
+  74% {
+    background-position: -40% 0;
+  }
+  88% {
+    background-position: 160% 0;
+  }
+  100% {
+    background-position: 160% 0;
+  }
+}
+
+/* ─── Buttons ──────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid;
+  border-radius: 2px;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+  text-decoration: none;
+  line-height: 1;
+}
+
+/* Primary: filled dark */
+.btn-primary {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+/* Primary on dark backgrounds */
+.btn-primary-dark {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+}
+
+.btn-primary-dark:hover {
+  background: transparent;
+  color: var(--white);
+}
+
+/* Secondary: outline */
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.btn-secondary:hover {
+  background: var(--ink);
+  color: var(--white);
+}
+
+/* Secondary on dark backgrounds */
+.btn-secondary-dark {
+  background: transparent;
+  color: var(--white);
+  border-color: var(--white);
+}
+
+.btn-secondary-dark:hover {
+  background: var(--white);
+  color: var(--black);
+}
+
+/* ─── Logo Marquee ─────────────────────────────────── */
+.marquee-container {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 35s linear infinite;
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ─── Hover rows (consistent across all list sections) ─ */
+.hover-row {
+  transition:
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.hover-row:hover {
+  background: var(--line-on-light);
+}
+
+.dark-section .hover-row:hover {
+  background: var(--line-on-dark);
+}
+/* ─── Custom cursor ────────────────────────────────── */
+@media (pointer: fine) {
+  body.cursor-initialized,
+  body.cursor-initialized * {
+    cursor: none !important;
+  }
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  mix-blend-mode: difference;
+  background: var(--white);
+  transform: translate(-50%, -50%);
+  transition: opacity 180ms ease;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--white);
+  pointer-events: none;
+  z-index: 99998;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 180ms ease, height 180ms ease, opacity 180ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursor-ring.expanded {
+  width: 56px;
+  height: 56px;
+}
+
+.cursor-label {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.cursor-ring.expanded .cursor-label {
+  opacity: 1;
+}
+
+/* ─── Knowledge graph animation ────────────────────── */
+.kg-dot {
+  animation: kg-travel 3s linear infinite;
+}
+
+@keyframes kg-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* ─── Reduced motion ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .shine {
+    animation: none;
+    background-position: -40% 0;
+  }
+
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+  }
+
+  .kg-dot {
+    animation: none;
+    offset-distance: 50%;
+    opacity: 1;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }
