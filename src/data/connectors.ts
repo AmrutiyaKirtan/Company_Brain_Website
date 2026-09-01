@@ -1,90 +1,182 @@
 export interface Connector {
   name: string;
   slug: string;
-  /** The export key in simple-icons (e.g. 'siGithub'). null = custom SVG path provided. */
+  tier: 1 | 2 | 3 | 4;
+  tierName: string;
+  category: 'Core Comms & Code' | 'Dev & Search' | 'Project Management' | 'CRM & Enterprise HR';
+  authMethod: string;
+  ingests: string;
+  dedupKey: string;
   simpleIconKey: string | null;
-  /** Custom SVG path data for connectors not in simple-icons */
   customSvgPath?: string;
   status: 'live' | 'coming-soon';
 }
 
 /**
- * Slack, Microsoft Outlook, and Microsoft Teams were removed from simple-icons
- * in recent versions due to trademark restrictions.
- * We provide accurate SVG paths for these three icons directly.
+ * Custom SVG path data for icons not directly available in simple-icons
  */
-
-// Slack hash mark
 const SLACK_PATH =
   'M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.124 2.521a2.528 2.528 0 0 1 2.52-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.52V8.834zm-1.271 0a2.528 2.528 0 0 1-2.521 2.521 2.528 2.528 0 0 1-2.521-2.521V2.522A2.528 2.528 0 0 1 15.166 0a2.528 2.528 0 0 1 2.521 2.522v6.312zm-2.521 10.124a2.528 2.528 0 0 1 2.521 2.52A2.528 2.528 0 0 1 15.166 24a2.528 2.528 0 0 1-2.521-2.522v-2.52h2.521zm0-1.271a2.528 2.528 0 0 1-2.521-2.521 2.528 2.528 0 0 1 2.521-2.521h6.312A2.528 2.528 0 0 1 24 15.166a2.528 2.528 0 0 1-2.522 2.521h-6.312z';
 
-// Microsoft Outlook envelope
 const OUTLOOK_PATH =
   'M7.88 12.04q0 .45-.11.87-.1.41-.33.74-.22.33-.58.52-.37.2-.87.2t-.85-.2q-.35-.21-.57-.55-.22-.33-.33-.75-.1-.42-.1-.86t.1-.87q.1-.43.34-.76.22-.34.59-.54.36-.2.87-.2t.86.2q.35.21.57.55.22.34.33.75.1.43.1.9zm-3.15.02q0 .37.08.68.08.31.24.53.16.21.39.32.24.12.57.12.33 0 .56-.12.24-.13.39-.34.16-.22.24-.53.08-.31.08-.67 0-.36-.09-.67-.08-.3-.25-.52-.16-.21-.4-.32-.22-.12-.55-.12-.34 0-.57.13-.24.13-.39.35-.16.22-.24.52-.08.31-.08.67zM24 12v9.38q0 .46-.33.8-.33.32-.8.32H7.6V14.1l-2.53 1.73-5.07-3.27V21.6q0 .17.12.3.11.13.3.13H24V12zm0-2.32V7.25L7.6 7.26v5.56l2.43-1.67 2.64 1.7L24 9.68zM7.6 6.26h15.27q.47 0 .8.33.33.34.33.8v.6L12.98 11.4 7.6 7.8V6.26zm-3.2-.6v1.38l-2.53 1.82-1.87-1.2v-2q0-.35.25-.6.24-.24.6-.24h3.55z';
 
-// Microsoft Teams
 const TEAMS_PATH =
   'M20.625 8.5h-6.25a.625.625 0 0 0-.625.625v6.25c0 .345.28.625.625.625h6.25c.345 0 .625-.28.625-.625v-6.25a.625.625 0 0 0-.625-.625zm-2.5 5.938a.312.312 0 0 1-.313.312h-2.5a.312.312 0 0 1-.312-.313V13.5h1.25v-.625H15v-1.25h1.25v-.625H15V10h2.813c.172 0 .312.14.312.313v4.125zm1.563-.313a.312.312 0 0 1-.313.313h-.625v-3.75h.625c.173 0 .313.14.313.312v3.125zM17.5 7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 1a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5zm1.25 1.25h-2.117c.24.357.367.78.367 1.25v5c0 .397-.098.77-.27 1.1.056.003.112.004.17.004a2.65 2.65 0 0 0 2.65-2.654V10.5a.75.75 0 0 0-.75-.75h-.05zM14.5 7.5A2 2 0 1 0 14.5 3.5a2 2 0 0 0 0 4zm1.75 1.75h-3.79a1.21 1.21 0 0 0-1.21 1.21V16a3.145 3.145 0 0 0 6.25-.5v-5a1.5 1.5 0 0 0-1.25-1.25z';
 
+const MONDAY_PATH =
+  'M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-3.5 14a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3.5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3.5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM8.5 11a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3.5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3.5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z';
+
+const SALESFORCE_PATH =
+  'M19.35 10.04C18.67 6.59 15.64 4 12 4c-2.9 0-5.43 1.64-6.68 4.04C2.37 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.61.1 2.78 1.49 2.78 3.1 0 1.65-1.35 2.86-3 2.86z';
+
+const SEGMENT_PATH =
+  'M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V15a3 3 0 0 1-3-3V7.07A8 8 0 0 1 20 12a7.93 7.93 0 0 1-7 4.93zM4 12a8 8 0 0 1 6-7.74V9a3 3 0 0 1 3 3v4.93A8 8 0 0 1 4 12z';
+
+const AMPLITUDE_PATH =
+  'M12 2L2 22h20L12 2zm0 4.5l6.5 13.5h-13L12 6.5zM12 11l-3 6h6l-3-6z';
+
+const FRONT_PATH =
+  'M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.8L19.4 8 12 11.2 4.6 8 12 4.8zM4 9.8l7 3.5v7.4l-7-3.5V9.8zm9 10.9v-7.4l7-3.5v7.4l-7 3.5z';
+
+const BAMBOO_PATH =
+  'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm4 8h-2V7h2v10z';
+
+const DEEL_PATH =
+  'M4 4h7a9 9 0 0 1 9 9 9 9 0 0 1-9 9H4V4zm7 14a5 5 0 0 0 5-5 5 5 0 0 0-5-5H8v10h3z';
+
+const RIPPLING_PATH =
+  'M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-4-8a4 4 0 1 1 4 4 4 4 0 0 1-4-4z';
+
+const ASHBY_PATH =
+  'M12 2L2 19.5h20L12 2zm0 5l6 10.5H6L12 7z';
+
+const EXA_PATH =
+  'M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z';
+
+const WEB_CRAWLER_PATH =
+  'M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41a7.98 7.98 0 0 1 4.9 8.95c-.32 1.83-1.4 3.4-3 4.45z';
+
 export const connectors: Connector[] = [
+  // ── Tier 1: Core Team Communication & Engineering Knowledge (10) ──
   {
     name: 'Slack',
     slug: 'slack',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'Bot Token (SLACK_BOT_TOKEN)',
+    ingests: 'Messages, threads, and replies from joined public & private channels',
+    dedupKey: 'slack:{channel_id}:{ts}',
     simpleIconKey: null,
     customSvgPath: SLACK_PATH,
     status: 'live',
   },
   {
-    name: 'Notion',
-    slug: 'notion',
-    simpleIconKey: 'siNotion',
-    status: 'live',
-  },
-  {
     name: 'Google Docs',
     slug: 'google-docs',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'OAuth 2.0 (credentials.json)',
+    ingests: 'Document text, paragraph headers, lists, and formatted tables',
+    dedupKey: 'gdoc:{doc_id}',
     simpleIconKey: 'siGoogledocs',
-    status: 'live',
-  },
-  {
-    name: 'Dropbox',
-    slug: 'dropbox',
-    simpleIconKey: 'siDropbox',
-    status: 'live',
-  },
-  {
-    name: 'GitHub',
-    slug: 'github',
-    simpleIconKey: 'siGithub',
-    status: 'live',
-  },
-  {
-    name: 'Google Drive',
-    slug: 'google-drive',
-    simpleIconKey: 'siGoogledrive',
     status: 'live',
   },
   {
     name: 'Google Sheets',
     slug: 'google-sheets',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'OAuth 2.0 (credentials.json)',
+    ingests: 'Spreadsheet tabs converted to structured key-value row text',
+    dedupKey: 'gsheet:{spreadsheet_id}:{sheet_name}',
     simpleIconKey: 'siGooglesheets',
+    status: 'live',
+  },
+  {
+    name: 'Google Drive',
+    slug: 'google-drive',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'OAuth 2.0 (credentials.json)',
+    ingests: 'Folder hierarchy metadata and document text contents',
+    dedupKey: 'gdrive:{file_id}',
+    simpleIconKey: 'siGoogledrive',
+    status: 'live',
+  },
+  {
+    name: 'Gmail',
+    slug: 'gmail',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'OAuth 2.0 (credentials.json)',
+    ingests: 'Email threads, internal messages, and plain-text body content',
+    dedupKey: 'gmail:{message_id}',
+    simpleIconKey: 'siGmail',
+    status: 'live',
+  },
+  {
+    name: 'GitHub',
+    slug: 'github',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'Personal Access Token (GITHUB_TOKEN)',
+    ingests: 'Issues, PR descriptions, labels, and code review comment threads',
+    dedupKey: 'github:{repo}:{issue_number}',
+    simpleIconKey: 'siGithub',
+    status: 'live',
+  },
+  {
+    name: 'Notion',
+    slug: 'notion',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'Integration Token (NOTION_TOKEN)',
+    ingests: 'Page block hierarchies, databases, and nested team wikis',
+    dedupKey: 'notion:{page_id}',
+    simpleIconKey: 'siNotion',
     status: 'live',
   },
   {
     name: 'Discord',
     slug: 'discord',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'Bot Token (DISCORD_BOT_TOKEN)',
+    ingests: 'Server text channels, threaded discussions, and announcement logs',
+    dedupKey: 'discord:{channel_id}:{message_id}',
     simpleIconKey: 'siDiscord',
     status: 'live',
   },
   {
     name: 'Linear',
     slug: 'linear',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'API Key (LINEAR_API_KEY)',
+    ingests: 'Issues, project descriptions, team context, and comments via GraphQL',
+    dedupKey: 'linear:{issue_id}',
     simpleIconKey: 'siLinear',
     status: 'live',
   },
   {
     name: 'Microsoft Outlook',
     slug: 'microsoft-outlook',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'Azure OAuth 2.0 (MS Graph API)',
+    ingests: 'Outlook email threads, calendar meeting agendas, and notes',
+    dedupKey: 'outlook:{message_id}',
     simpleIconKey: null,
     customSvgPath: OUTLOOK_PATH,
     status: 'live',
@@ -92,8 +184,367 @@ export const connectors: Connector[] = [
   {
     name: 'Microsoft Teams',
     slug: 'microsoft-teams',
+    tier: 1,
+    tierName: 'Tier 1 — Core Comms & Engineering',
+    category: 'Core Comms & Code',
+    authMethod: 'Azure OAuth 2.0 (MS Graph API)',
+    ingests: 'Teams channel posts, replies, and group meeting conversations',
+    dedupKey: 'teams:{channel_id}:{message_id}',
     simpleIconKey: null,
     customSvgPath: TEAMS_PATH,
+    status: 'live',
+  },
+
+  // ── Tier 2: Extended Dev, File & Search Sources (10) ──
+  {
+    name: 'GitLab',
+    slug: 'gitlab',
+    tier: 2,
+    tierName: 'Tier 2 — Extended Dev & Search',
+    category: 'Dev & Search',
+    authMethod: 'Personal Access Token (GITLAB_TOKEN)',
+    ingests: 'Projects, issue trackers, merge requests, and snippet notes',
+    dedupKey: 'gitlab:{project}:{type}:{iid}',
+    simpleIconKey: 'siGitlab',
+    status: 'live',
+  },
+  {
+    name: 'Dropbox',
+    slug: 'dropbox',
+    tier: 2,
+    tierName: 'Tier 2 — Extended Dev & Search',
+    category: 'Dev & Search',
+    authMethod: 'OAuth Access Token (DROPBOX_TOKEN)',
+    ingests: 'Text files, markdown docs, specifications (.md, .txt, .json)',
+    dedupKey: 'dropbox:{file_id}',
+    simpleIconKey: 'siDropbox',
+    status: 'live',
+  },
+  {
+    name: 'Mixpanel',
+    slug: 'mixpanel',
+    tier: 2,
+    tierName: 'Tier 2 — Extended Dev & Search',
+    category: 'Dev & Search',
+    authMethod: 'API Secret (MIXPANEL_SECRET)',
+    ingests: 'Tracked event schema catalog, properties, and funnels',
+    dedupKey: 'mixpanel:event_schema:{project_id}',
+    simpleIconKey: 'siMixpanel',
+    status: 'live',
+  },
+  {
+    name: 'Amplitude',
+    slug: 'amplitude',
+    tier: 2,
+    tierName: 'Tier 2 — Extended Dev & Search',
+    category: 'Dev & Search',
+    authMethod: 'API Key + Secret',
+    ingests: 'Event taxonomy definitions and behavioral analytics plans',
+    dedupKey: 'amplitude:taxonomy:{key}',
+    simpleIconKey: null,
+    customSvgPath: AMPLITUDE_PATH,
+    status: 'live',
+  },
+  {
+    name: 'Algolia',
+    slug: 'algolia',
+    tier: 2,
+    tierName: 'Tier 2 — Extended Dev & Search',
+    category: 'Dev & Search',
+    authMethod: 'App ID + API Key',
+    ingests: 'Indexed search records and documentation facets',
+    dedupKey: 'algolia:{index}:{objectID}',
+    simpleIconKey: 'siAlgolia',
+    status: 'live',
+  },
+  {
+    name: 'Exa AI',
+    slug: 'exa',
+    tier: 2,
+    tierName: 'Tier 2 — Extended Dev & Search',
+    category: 'Dev & Search',
+    authMethod: 'API Key (EXA_API_KEY)',
+    ingests: 'Semantic web research results for company-configured domains',
+    dedupKey: 'exa:{hash(query)}',
+    simpleIconKey: null,
+    customSvgPath: EXA_PATH,
+    status: 'live',
+  },
+  {
+    name: 'Perplexity AI',
+    slug: 'perplexity',
+    tier: 2,
+    tierName: 'Tier 2 — Extended Dev & Search',
+    category: 'Dev & Search',
+    authMethod: 'API Key (PERPLEXITY_KEY)',
+    ingests: 'AI search completions, citations, and syntheses',
+    dedupKey: 'perplexity:{hash(prompt)}',
+    simpleIconKey: 'siPerplexity',
+    status: 'live',
+  },
+  {
+    name: 'Facebook Pages',
+    slug: 'facebook',
+    tier: 2,
+    tierName: 'Tier 2 — Extended Dev & Search',
+    category: 'Dev & Search',
+    authMethod: 'Page Access Token',
+    ingests: 'Page posts, public updates, and customer comment queries',
+    dedupKey: 'facebook:{post_id}',
+    simpleIconKey: 'siFacebook',
+    status: 'live',
+  },
+  {
+    name: 'Todoist',
+    slug: 'todoist',
+    tier: 2,
+    tierName: 'Tier 2 — Extended Dev & Search',
+    category: 'Dev & Search',
+    authMethod: 'API Token (TODOIST_TOKEN)',
+    ingests: 'Project tasks, checklists, descriptions, and comments',
+    dedupKey: 'todoist:{task_id}',
+    simpleIconKey: 'siTodoist',
+    status: 'live',
+  },
+  {
+    name: 'Web Crawler',
+    slug: 'web-crawler',
+    tier: 2,
+    tierName: 'Tier 2 — Extended Dev & Search',
+    category: 'Dev & Search',
+    authMethod: 'Config URL Target List',
+    ingests: 'Scraped internal documentation sites and public portal text',
+    dedupKey: 'webcrawler:{url_hash}',
+    simpleIconKey: null,
+    customSvgPath: WEB_CRAWLER_PATH,
+    status: 'live',
+  },
+
+  // ── Tier 3: Project Management, Issue Tracking & Analytics (8) ──
+  {
+    name: 'Jira',
+    slug: 'jira',
+    tier: 3,
+    tierName: 'Tier 3 — Project Management & Tracking',
+    category: 'Project Management',
+    authMethod: 'API Token + Domain (JIRA_API_TOKEN)',
+    ingests: 'Sprint backlog issues, acceptance criteria, work logs, comments',
+    dedupKey: 'jira:{issue_key}',
+    simpleIconKey: 'siJira',
+    status: 'live',
+  },
+  {
+    name: 'Asana',
+    slug: 'asana',
+    tier: 3,
+    tierName: 'Tier 3 — Project Management & Tracking',
+    category: 'Project Management',
+    authMethod: 'Personal Access Token (ASANA_TOKEN)',
+    ingests: 'Project boards, task descriptions, subtasks, milestone stories',
+    dedupKey: 'asana:{task_gid}',
+    simpleIconKey: 'siAsana',
+    status: 'live',
+  },
+  {
+    name: 'ClickUp',
+    slug: 'clickup',
+    tier: 3,
+    tierName: 'Tier 3 — Project Management & Tracking',
+    category: 'Project Management',
+    authMethod: 'API Key (CLICKUP_API_KEY)',
+    ingests: 'Tasks, embedded docs, custom fields, and conversation threads',
+    dedupKey: 'clickup:{task_id}',
+    simpleIconKey: 'siClickup',
+    status: 'live',
+  },
+  {
+    name: 'Airtable',
+    slug: 'airtable',
+    tier: 3,
+    tierName: 'Tier 3 — Project Management & Tracking',
+    category: 'Project Management',
+    authMethod: 'Personal Access Token (AIRTABLE_TOKEN)',
+    ingests: 'Base tables, schema metadata, field records, and linked relations',
+    dedupKey: 'airtable:{base_id}:{record_id}',
+    simpleIconKey: 'siAirtable',
+    status: 'live',
+  },
+  {
+    name: 'Monday.com',
+    slug: 'monday',
+    tier: 3,
+    tierName: 'Tier 3 — Project Management & Tracking',
+    category: 'Project Management',
+    authMethod: 'API Token (MONDAY_TOKEN)',
+    ingests: 'Boards, workspace items, column statuses, and update logs',
+    dedupKey: 'monday:{item_id}',
+    simpleIconKey: null,
+    customSvgPath: MONDAY_PATH,
+    status: 'live',
+  },
+  {
+    name: 'Basecamp',
+    slug: 'basecamp',
+    tier: 3,
+    tierName: 'Tier 3 — Project Management & Tracking',
+    category: 'Project Management',
+    authMethod: 'OAuth 2.0 (BASECAMP_OAUTH)',
+    ingests: 'Message boards, campfire chats, to-do lists, and schedules',
+    dedupKey: 'basecamp:{recording_id}',
+    simpleIconKey: 'siBasecamp',
+    status: 'live',
+  },
+  {
+    name: 'Datadog',
+    slug: 'datadog',
+    tier: 3,
+    tierName: 'Tier 3 — Project Management & Tracking',
+    category: 'Project Management',
+    authMethod: 'API Key + App Key',
+    ingests: 'Incident logs, monitor descriptions, alert post-mortems',
+    dedupKey: 'datadog:{incident_id}',
+    simpleIconKey: 'siDatadog',
+    status: 'live',
+  },
+  {
+    name: 'Segment',
+    slug: 'segment',
+    tier: 3,
+    tierName: 'Tier 3 — Project Management & Tracking',
+    category: 'Project Management',
+    authMethod: 'Public API Key (SEGMENT_KEY)',
+    ingests: 'Tracking plans, protocols schema definitions, and sources',
+    dedupKey: 'segment:{event_id}',
+    simpleIconKey: null,
+    customSvgPath: SEGMENT_PATH,
+    status: 'live',
+  },
+
+  // ── Tier 4: CRM, Support, HR & Enterprise (10) ──
+  {
+    name: 'Front',
+    slug: 'front',
+    tier: 4,
+    tierName: 'Tier 4 — CRM, Support & Enterprise HR',
+    category: 'CRM & Enterprise HR',
+    authMethod: 'API Token (FRONT_TOKEN)',
+    ingests: 'Shared inbox customer tickets, internal comments, resolution notes',
+    dedupKey: 'front:{conversation_id}',
+    simpleIconKey: null,
+    customSvgPath: FRONT_PATH,
+    status: 'live',
+  },
+  {
+    name: 'Zoom',
+    slug: 'zoom',
+    tier: 4,
+    tierName: 'Tier 4 — CRM, Support & Enterprise HR',
+    category: 'CRM & Enterprise HR',
+    authMethod: 'Server-to-Server OAuth Credentials',
+    ingests: 'Cloud recording transcripts, meeting summaries, and chat logs',
+    dedupKey: 'zoom:{meeting_id}',
+    simpleIconKey: 'siZoom',
+    status: 'live',
+  },
+  {
+    name: 'Twitter / X',
+    slug: 'twitter',
+    tier: 4,
+    tierName: 'Tier 4 — CRM, Support & Enterprise HR',
+    category: 'CRM & Enterprise HR',
+    authMethod: 'Bearer Token (TWITTER_BEARER)',
+    ingests: 'Company tweets, support replies, and threaded conversations',
+    dedupKey: 'twitter:{tweet_id}',
+    simpleIconKey: 'siX',
+    status: 'live',
+  },
+  {
+    name: 'HubSpot',
+    slug: 'hubspot',
+    tier: 4,
+    tierName: 'Tier 4 — CRM, Support & Enterprise HR',
+    category: 'CRM & Enterprise HR',
+    authMethod: 'Private App Token (HUBSPOT_TOKEN)',
+    ingests: 'CRM contacts, deal notes, customer ticket resolution histories',
+    dedupKey: 'hubspot:{object_type}:{id}',
+    simpleIconKey: 'siHubspot',
+    status: 'live',
+  },
+  {
+    name: 'Salesforce',
+    slug: 'salesforce',
+    tier: 4,
+    tierName: 'Tier 4 — CRM, Support & Enterprise HR',
+    category: 'CRM & Enterprise HR',
+    authMethod: 'OAuth 2.0 / Connected App',
+    ingests: 'Accounts, opportunities, cases, and knowledge articles',
+    dedupKey: 'salesforce:{object}:{id}',
+    simpleIconKey: null,
+    customSvgPath: SALESFORCE_PATH,
+    status: 'live',
+  },
+  {
+    name: 'Calendly',
+    slug: 'calendly',
+    tier: 4,
+    tierName: 'Tier 4 — CRM, Support & Enterprise HR',
+    category: 'CRM & Enterprise HR',
+    authMethod: 'Personal Access Token',
+    ingests: 'Scheduled event types, meeting routing rules, and custom Q&A',
+    dedupKey: 'calendly:{event_uuid}',
+    simpleIconKey: 'siCalendly',
+    status: 'live',
+  },
+  {
+    name: 'Ashby',
+    slug: 'ashby',
+    tier: 4,
+    tierName: 'Tier 4 — CRM, Support & Enterprise HR',
+    category: 'CRM & Enterprise HR',
+    authMethod: 'API Key (ASHBY_API_KEY)',
+    ingests: 'Job requisition specs, candidate evaluation criteria, interview rubrics',
+    dedupKey: 'ashby:{candidate_id}',
+    simpleIconKey: null,
+    customSvgPath: ASHBY_PATH,
+    status: 'live',
+  },
+  {
+    name: 'BambooHR',
+    slug: 'bamboohr',
+    tier: 4,
+    tierName: 'Tier 4 — CRM, Support & Enterprise HR',
+    category: 'CRM & Enterprise HR',
+    authMethod: 'API Key + Subdomain',
+    ingests: 'Company announcements, time-off policies, and employee handbooks',
+    dedupKey: 'bamboohr:{announcement_id}',
+    simpleIconKey: null,
+    customSvgPath: BAMBOO_PATH,
+    status: 'live',
+  },
+  {
+    name: 'Deel',
+    slug: 'deel',
+    tier: 4,
+    tierName: 'Tier 4 — CRM, Support & Enterprise HR',
+    category: 'CRM & Enterprise HR',
+    authMethod: 'API Token (DEEL_TOKEN)',
+    ingests: 'Compliance policies, contractor guidelines, country-specific terms',
+    dedupKey: 'deel:{contract_id}',
+    simpleIconKey: null,
+    customSvgPath: DEEL_PATH,
+    status: 'live',
+  },
+  {
+    name: 'Rippling',
+    slug: 'rippling',
+    tier: 4,
+    tierName: 'Tier 4 — CRM, Support & Enterprise HR',
+    category: 'CRM & Enterprise HR',
+    authMethod: 'API Key (RIPPLING_KEY)',
+    ingests: 'HR policy handbooks, team hierarchies, and IT security docs',
+    dedupKey: 'rippling:{document_id}',
+    simpleIconKey: null,
+    customSvgPath: RIPPLING_PATH,
     status: 'live',
   },
 ];

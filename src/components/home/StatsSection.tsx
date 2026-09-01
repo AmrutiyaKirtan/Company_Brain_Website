@@ -1,42 +1,89 @@
 export default function StatsSection() {
   return (
-    <section className="bg-black py-20 md:py-32">
-      <div className="container mx-auto px-6 max-w-4xl">
-        <span className="font-mono text-xs uppercase tracking-widest text-muted-on-dark mb-4 block">
-          By the numbers
-        </span>
-        <div className="border border-line-on-dark-strong p-6 font-mono bg-[#0a0806]">
-          <div className="flex items-center gap-2 mb-8 pb-4 border-b border-line-on-dark">
-            <div className="w-3 h-3 rounded-full bg-line-on-dark-strong"></div>
-            <div className="w-3 h-3 rounded-full bg-line-on-dark-strong"></div>
-            <div className="w-3 h-3 rounded-full bg-line-on-dark-strong"></div>
-            <span className="ml-4 text-xs text-muted-on-dark">sys.log</span>
+    <section className="bg-black py-20 md:py-32 text-white border-t border-line-on-dark">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <span className="font-mono text-xs uppercase tracking-widest text-muted-on-dark mb-3 block">
+              Performance &amp; Engineering Metrics
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight">
+              Built for speed, accuracy, and absolute sovereignty.
+            </h2>
+          </div>
+          <p className="font-body text-white/70 text-sm sm:text-base max-w-[45ch]">
+            Rigorous benchmarks measured across multi-connector syncs, sentence chunking, and local LLM synthesis.
+          </p>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="p-6 rounded-2xl glass-card-dark border border-white/10 flex flex-col justify-between press-scale">
+            <div>
+              <span className="font-mono text-xs text-amber-300 block mb-2 font-semibold">
+                01 / EFFICIENCY
+              </span>
+              <div className="font-display text-4xl sm:text-5xl font-bold text-white mb-2 tracking-tight">
+                -95%
+              </div>
+              <h3 className="font-display font-semibold text-lg text-white mb-2">
+                Documentation Time
+              </h3>
+            </div>
+            <p className="font-body text-xs text-white/70 leading-relaxed">
+              Procedures that took 45 minutes to draft manually are synthesized and formatted in under 2 minutes.
+            </p>
           </div>
 
-          <div className="flex flex-col">
-            <div className="hover-row dark-section flex flex-col md:flex-row items-start md:items-center py-6 border-b border-line-on-dark group transition-colors hover:bg-white/[0.02]">
-              <span className="text-muted-on-dark text-xs w-12 group-hover:text-white transition-colors">01</span>
-              <p className="flex-1 text-white/80 text-sm md:pr-12 group-hover:text-white transition-colors mb-4 md:mb-0">
-                Faster documentation. A task that takes 45 minutes manually takes about 2 minutes
-              </p>
-              <span className="text-3xl font-display text-white group-hover:text-white transition-colors">−95%</span>
+          <div className="p-6 rounded-2xl glass-card-dark border border-white/10 flex flex-col justify-between press-scale">
+            <div>
+              <span className="font-mono text-xs text-amber-300 block mb-2 font-semibold">
+                02 / CONNECTORS
+              </span>
+              <div className="font-display text-4xl sm:text-5xl font-bold text-white mb-2 tracking-tight">
+                38
+              </div>
+              <h3 className="font-display font-semibold text-lg text-white mb-2">
+                Enterprise Sources
+              </h3>
             </div>
+            <p className="font-body text-xs text-white/70 leading-relaxed">
+              Unified across communication, code, tracking, HR, customer support, and analytics tools.
+            </p>
+          </div>
 
-            <div className="hover-row dark-section flex flex-col md:flex-row items-start md:items-center py-6 border-b border-line-on-dark group transition-colors hover:bg-white/[0.02]">
-              <span className="text-muted-on-dark text-xs w-12 group-hover:text-white transition-colors">02</span>
-              <p className="flex-1 text-white/80 text-sm md:pr-12 group-hover:text-white transition-colors mb-4 md:mb-0">
-                Idempotent, deduplicated processing. It is safe to pause and resume, and never reprocesses the same content twice
-              </p>
-              <span className="text-3xl font-display text-white group-hover:text-white transition-colors">0 dupes</span>
+          <div className="p-6 rounded-2xl glass-card-dark border border-white/10 flex flex-col justify-between press-scale">
+            <div>
+              <span className="font-mono text-xs text-emerald-400 block mb-2 font-semibold">
+                03 / IDEMPOTENCY
+              </span>
+              <div className="font-display text-4xl sm:text-5xl font-bold text-white mb-2 tracking-tight">
+                0 dupes
+              </div>
+              <h3 className="font-display font-semibold text-lg text-white mb-2">
+                Deduplicated Sync
+              </h3>
             </div>
+            <p className="font-body text-xs text-white/70 leading-relaxed">
+              Running sync 10 times produces the exact same result as running once. Resume interrupted syncs instantly.
+            </p>
+          </div>
 
-            <div className="hover-row dark-section flex flex-col md:flex-row items-start md:items-center py-6 group transition-colors hover:bg-white/[0.02]">
-              <span className="text-muted-on-dark text-xs w-12 group-hover:text-white transition-colors">03</span>
-              <p className="flex-1 text-white/80 text-sm md:pr-12 group-hover:text-white transition-colors mb-4 md:mb-0">
-                Inference, ingestion, and storage all run on your own infrastructure
-              </p>
-              <span className="text-3xl font-display text-white group-hover:text-white transition-colors">100% local</span>
+          <div className="p-6 rounded-2xl glass-card-dark border border-white/10 flex flex-col justify-between press-scale">
+            <div>
+              <span className="font-mono text-xs text-emerald-400 block mb-2 font-semibold">
+                04 / PRIVACY
+              </span>
+              <div className="font-display text-4xl sm:text-5xl font-bold text-white mb-2 tracking-tight">
+                100%
+              </div>
+              <h3 className="font-display font-semibold text-lg text-white mb-2">
+                Local Sovereignty
+              </h3>
             </div>
+            <p className="font-body text-xs text-white/70 leading-relaxed">
+              Inference (Gemma 4 via Ollama), ingestion, chunking, and SQLite storage all execute on your own servers.
+            </p>
           </div>
         </div>
       </div>

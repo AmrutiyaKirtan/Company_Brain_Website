@@ -2,16 +2,28 @@
 
 /* ─── Design Tokens ────────────────────────────────── */
 :root {
-  --ink: #18130f;
-  --black: #100c09;
-  --paper: #e9e0cd;
-  --white: #f1e9d8;
-  --muted-on-light: #5e5544;
-  --muted-on-dark: #b7a98c;
-  --line-on-light: rgba(24, 19, 15, 0.16);
-  --line-on-light-strong: rgba(24, 19, 15, 0.3);
-  --line-on-dark: rgba(241, 233, 216, 0.16);
-  --line-on-dark-strong: rgba(241, 233, 216, 0.32);
+  --ink: #14100c;
+  --black: #0c0907;
+  --paper: #ece4d2;
+  --paper-subtle: #f4edd9;
+  --paper-dark: #ded4bf;
+  --white: #f5eedb;
+  --cream: #fffaf0;
+  --accent: #d97706;
+  --accent-light: #fbbf24;
+  --muted-on-light: #5f5544;
+  --muted-on-dark: #b8aa8c;
+  --line-on-light: rgba(20, 16, 12, 0.14);
+  --line-on-light-strong: rgba(20, 16, 12, 0.28);
+  --line-on-dark: rgba(245, 238, 219, 0.14);
+  --line-on-dark-strong: rgba(245, 238, 219, 0.28);
+
+  /* Apple Glass & Material Tokens */
+  --glass-bg-light: rgba(236, 228, 210, 0.72);
+  --glass-bg-dark: rgba(12, 9, 7, 0.78);
+  --glass-border-light: rgba(255, 255, 255, 0.4);
+  --glass-border-dark: rgba(245, 238, 219, 0.12);
+  --glass-blur: blur(24px) saturate(180%);
 }
 
 /* ─── Tailwind v4 Theme ────────────────────────────── */
@@ -19,7 +31,10 @@
   --color-ink: var(--ink);
   --color-black: var(--black);
   --color-paper: var(--paper);
+  --color-paper-subtle: var(--paper-subtle);
+  --color-paper-dark: var(--paper-dark);
   --color-white: var(--white);
+  --color-cream: var(--cream);
   --color-muted-on-light: var(--muted-on-light);
   --color-muted-on-dark: var(--muted-on-dark);
   --color-line-on-light: var(--line-on-light);
@@ -35,17 +50,160 @@
 /* ─── Base ─────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
+  overflow-x: hidden;
 }
 
 ::selection {
   background: var(--ink);
   color: var(--white);
+}
+
+/* ─── Apple Typography & Tracking ──────────────────── */
+h1, h2, h3, .heading-tight {
+  letter-spacing: -0.028em;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+.subhead-caps {
+  font-family: var(--font-mono);
+  font-size: 0.725rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+/* ─── Apple Fluid Buttons & Interactive Press ──────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  border: 1px solid;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+  transition:
+    transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+/* Apple Active Press Scale */
+.btn:active,
+.press-scale:active {
+  transform: scale(0.97) !important;
+}
+
+/* Primary: filled dark */
+.btn-primary {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.btn-primary:hover {
+  background: #2a221a;
+  border-color: #2a221a;
+  color: var(--white);
+}
+
+/* Primary on dark backgrounds */
+.btn-primary-dark {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+}
+
+.btn-primary-dark:hover {
+  background: #fffdf8;
+  border-color: #fffdf8;
+  color: var(--black);
+  box-shadow: 0 4px 16px rgba(245, 238, 219, 0.2);
+}
+
+/* Secondary: outline */
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-on-light-strong);
+}
+
+.btn-secondary:hover {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+}
+
+/* Secondary on dark backgrounds */
+.btn-secondary-dark {
+  background: rgba(245, 238, 219, 0.06);
+  color: var(--white);
+  border-color: var(--line-on-dark-strong);
+  backdrop-filter: blur(12px);
+}
+
+.btn-secondary-dark:hover {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+}
+
+/* ─── Apple Glass Material Classes ─────────────────── */
+.glass-chrome-dark {
+  background: var(--glass-bg-dark);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border-dark);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.45);
+}
+
+.glass-chrome-light {
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--line-on-light);
+  border-top: 1px solid var(--glass-border-light);
+  box-shadow: 0 8px 24px -4px rgba(20, 16, 12, 0.08);
+}
+
+.glass-card-dark {
+  background: rgba(18, 14, 11, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 238, 219, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.glass-card-light {
+  background: rgba(244, 237, 217, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line-on-light);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 /* ─── Scroll Progress Bar ──────────────────────────── */
@@ -115,76 +273,6 @@ body {
   }
 }
 
-/* ─── Buttons ──────────────────────────────────────── */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border: 1px solid;
-  border-radius: 2px;
-  cursor: pointer;
-  transition:
-    background 180ms ease,
-    color 180ms ease,
-    border-color 180ms ease;
-  text-decoration: none;
-  line-height: 1;
-}
-
-/* Primary: filled dark */
-.btn-primary {
-  background: var(--ink);
-  color: var(--white);
-  border-color: var(--ink);
-}
-
-.btn-primary:hover {
-  background: transparent;
-  color: var(--ink);
-}
-
-/* Primary on dark backgrounds */
-.btn-primary-dark {
-  background: var(--white);
-  color: var(--black);
-  border-color: var(--white);
-}
-
-.btn-primary-dark:hover {
-  background: transparent;
-  color: var(--white);
-}
-
-/* Secondary: outline */
-.btn-secondary {
-  background: transparent;
-  color: var(--ink);
-  border-color: var(--ink);
-}
-
-.btn-secondary:hover {
-  background: var(--ink);
-  color: var(--white);
-}
-
-/* Secondary on dark backgrounds */
-.btn-secondary-dark {
-  background: transparent;
-  color: var(--white);
-  border-color: var(--white);
-}
-
-.btn-secondary-dark:hover {
-  background: var(--white);
-  color: var(--black);
-}
-
 /* ─── Logo Marquee ─────────────────────────────────── */
 .marquee-container {
   overflow: hidden;
@@ -207,7 +295,7 @@ body {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 35s linear infinite;
+  animation: marquee-scroll 45s linear infinite;
 }
 
 .marquee-container:hover .marquee-track {
@@ -223,11 +311,12 @@ body {
   }
 }
 
-/* ─── Hover rows (consistent across all list sections) ─ */
+/* ─── Hover rows ───────────────────────────────────── */
 .hover-row {
   transition:
     background 180ms ease,
-    color 180ms ease;
+    color 180ms ease,
+    transform 180ms ease;
 }
 
 .hover-row:hover {
@@ -237,6 +326,7 @@ body {
 .dark-section .hover-row:hover {
   background: var(--line-on-dark);
 }
+
 /* ─── Custom cursor ────────────────────────────────── */
 @media (pointer: fine) {
   body.cursor-initialized,
@@ -279,13 +369,13 @@ body {
 }
 
 .cursor-ring.expanded {
-  width: 56px;
-  height: 56px;
+  width: 58px;
+  height: 58px;
 }
 
 .cursor-label {
   font-family: var(--font-mono);
-  font-size: 7px;
+  font-size: 7.5px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--white);
@@ -322,7 +412,21 @@ body {
   }
 }
 
-/* ─── Reduced motion ───────────────────────────────── */
+/* ─── Apple Subtle Glows & Terminal Chrome ─────────── */
+.terminal-glow {
+  box-shadow: 0 0 50px -10px rgba(241, 233, 216, 0.08), 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+}
+
+.pulse-node {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.15); }
+}
+
+/* ─── Reduced Motion ───────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .shine {
     animation: none;
@@ -343,5 +447,22 @@ body {
 
   html {
     scroll-behavior: auto;
+  }
+
+  .btn:active,
+  .press-scale:active {
+    transform: none !important;
+  }
+}
+
+/* ─── Reduced Transparency ─────────────────────────── */
+@media (prefers-reduced-transparency: reduce) {
+  .glass-chrome-dark {
+    background: #0c0907 !important;
+    backdrop-filter: none !important;
+  }
+  .glass-chrome-light {
+    background: #ece4d2 !important;
+    backdrop-filter: none !important;
   }
 }
