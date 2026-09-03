@@ -4,7 +4,7 @@ export default function HowItWorksSection() {
       step: '01',
       label: 'CONNECT',
       title: 'Connect across 38 tools',
-      desc: 'Company Brain hooks into Slack, Notion, GitHub, Google Workspace, Linear, and Jira via unified BaseConnector handlers with rate-limit backoff.',
+      desc: 'YCB hooks into Slack, Notion, GitHub, Google Workspace, Linear, and Jira via unified BaseConnector handlers with rate-limit backoff.',
     },
     {
       step: '02',
@@ -39,29 +39,29 @@ export default function HowItWorksSection() {
   ];
 
   return (
-    <section id="how-it-works" className="bg-black py-20 md:py-32 overflow-hidden border-t border-line-on-dark">
+    <section id="how-it-works" className="bg-black py-20 md:py-32 overflow-hidden border-t border-line-on-dark font-body text-white">
       <div className="container mx-auto px-6 max-w-4xl relative">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="font-mono text-xs uppercase tracking-widest text-muted-on-dark mb-3 block">
             End-to-End Workflow
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-semibold tracking-tight">
-            How Company Brain works
+            How YCB works
           </h2>
         </div>
 
         {/* Central timeline line */}
-        <div className="absolute left-6 md:left-1/2 top-32 bottom-12 w-[1px] bg-line-on-dark transform md:-translate-x-1/2 hidden md:block"></div>
-        <div className="absolute left-[39px] top-32 bottom-12 w-[1px] bg-line-on-dark md:hidden"></div>
+        <div className="absolute left-6 md:left-1/2 top-36 bottom-12 w-[1px] bg-line-on-dark transform md:-translate-x-1/2 hidden md:block"></div>
+        <div className="absolute left-[39px] top-36 bottom-12 w-[1px] bg-line-on-dark md:hidden"></div>
 
         <div className="space-y-0">
           {steps.map((item) => (
             <div
               key={item.step}
-              className="hover-row dark-section relative flex flex-col md:flex-row md:items-center py-12 group hover:bg-white/[0.02] transition-all rounded-xl"
+              className="hover-row dark-section relative flex flex-col md:flex-row md:items-center py-10 group hover:bg-white/[0.03] transition-all rounded-2xl"
             >
               <div className="md:w-1/2 md:pr-12 md:text-right flex flex-col md:items-end z-10 pl-16 md:pl-0 mb-4 md:mb-0 relative">
-                <span className="font-mono text-amber-400 text-xs mb-2 group-hover:text-amber-300 transition-colors font-semibold">
+                <span className="font-mono text-amber-400 text-xs mb-1.5 group-hover:text-amber-300 transition-colors font-bold">
                   {item.step} / {item.label}
                 </span>
                 <h3 className="font-display font-semibold text-white text-xl sm:text-2xl">

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Space_Grotesk, IBM_Plex_Mono, DM_Sans } from 'next/font/google';
+import Script from 'next/script';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import ScrollProgressBar from '@/components/ScrollProgressBar';
@@ -23,14 +24,14 @@ const ibmPlexMono = IBM_Plex_Mono({
 const dmSans = DM_Sans({
   variable: '--font-dm-sans',
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'Company Brain | Local-First AI Knowledge Engine',
+  title: 'YCB (Your Company Brain) | Local-First AI Knowledge Engine',
   description:
-    'Company Brain reads through your Slack, docs, and code, and uses a local AI model to extract structured knowledge. It works automatically, continuously, and entirely offline. Nothing leaves your servers.',
+    'YCB (Your Company Brain) connects to 38 tools across Slack, Notion, GitHub, and Docs, extracting structured procedure cards for AI agents entirely offline with zero data leakage.',
 };
 
 export default function RootLayout({
@@ -43,7 +44,13 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} ${dmSans.variable} antialiased`}
     >
-      <body className="min-h-screen">
+      <head>
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="lazyOnload"
+        />
+      </head>
+      <body className="min-h-screen bg-paper text-ink">
         <ScrollProgressBar />
         <Nav />
         <main>{children}</main>

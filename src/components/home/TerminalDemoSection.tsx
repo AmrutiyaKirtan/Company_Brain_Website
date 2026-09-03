@@ -104,7 +104,6 @@ export default function TerminalDemoSection() {
   const activeResult = PRESET_QUERIES[activeQueryKey];
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
     if (activeMode === 'ask') {
       setIsTyping(true);
       setDisplayedText('');
@@ -139,21 +138,20 @@ export default function TerminalDemoSection() {
   };
 
   return (
-    <section id="interactive-demo" className="bg-black py-20 md:py-32 relative overflow-hidden">
-      {/* Subtle background ambient light */}
+    <section id="interactive-demo" className="bg-black py-20 md:py-32 relative overflow-hidden text-white border-t border-line-on-dark">
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-amber-500/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="font-mono text-xs uppercase tracking-widest text-muted-on-dark mb-3 block">
-            Live Terminal Simulator
+            Interactive CLI Simulator
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-semibold tracking-tight mb-4">
-            Experience the CLI workflow in real time.
+            Experience the YCB workflow in real time.
           </h2>
           <p className="font-body text-white/70 text-base sm:text-lg">
-            Company Brain lives in your terminal. Ask natural-language questions, switch local or cloud AI models, and inspect auto-generated procedure cards.
+            YCB lives in your terminal. Ask natural-language questions, switch local or cloud AI models, and inspect auto-generated procedure cards.
           </p>
         </div>
 
@@ -193,7 +191,7 @@ export default function TerminalDemoSection() {
               <span className="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block"></span>
               <span className="w-3 h-3 rounded-full bg-[#27c93f] inline-block"></span>
               <span className="ml-3 font-mono text-[11px] text-white/50">
-                ycb terminal — zsh (offline-cluster:11434)
+                ycb terminal — zsh (localhost:11434)
               </span>
             </div>
 
@@ -372,10 +370,9 @@ export default function TerminalDemoSection() {
                   <span className="text-white">ycb sync --interactive</span>
                 </div>
 
-                {/* Rich Live Terminal State Panel */}
-                <div className="p-5 rounded-xl bg-black border border-line-on-dark-strong space-y-4">
+                <div className="p-5 rounded-xl bg-black border border-white/15 space-y-4">
                   <div className="flex items-center justify-between text-xs pb-3 border-b border-white/10">
-                    <span className="text-amber-300 font-bold">🧠 COMPANY BRAIN v3.2.2 — SYNC DASHBOARD</span>
+                    <span className="text-amber-300 font-bold">🧠 YCB v3.2.2 — SYNC DASHBOARD</span>
                     <span className="text-emerald-400">STATUS: INGESTING (BATCH 1/19)</span>
                   </div>
 
@@ -470,7 +467,7 @@ export default function TerminalDemoSection() {
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                 Idempotency Verified (zero data re-processing)
               </span>
-              <span>v3.2.2 • Offline Local SQLite</span>
+              <span>YCB v3.2.2 • Offline Local SQLite</span>
             </div>
           </div>
         </div>

@@ -144,14 +144,14 @@ export default function PipelineSection() {
   const activeStep = PIPELINE_STEPS[activeStepIdx];
 
   return (
-    <section id="pipeline" className="bg-black py-20 md:py-32 text-white relative">
+    <section id="pipeline" className="bg-black py-20 md:py-32 text-white border-t border-line-on-dark font-body">
       <div className="container mx-auto px-6 max-w-6xl">
         {/* Section Header */}
         <div className="mb-14">
           <span className="font-mono text-xs uppercase tracking-widest text-muted-on-dark mb-3 block">
             Technical Architecture
           </span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white">
             The 5-stage knowledge synthesis pipeline.
           </h2>
           <p className="font-body text-white/70 text-base sm:text-lg max-w-[55ch]">
@@ -173,7 +173,7 @@ export default function PipelineSection() {
             >
               <span
                 className={`font-mono text-xs font-bold block mb-1 ${
-                  activeStepIdx === idx ? 'text-amber-700' : 'text-amber-400/80'
+                  activeStepIdx === idx ? 'text-amber-800' : 'text-amber-300'
                 }`}
               >
                 {step.stepNumber} / {step.badge}
@@ -186,7 +186,7 @@ export default function PipelineSection() {
         </div>
 
         {/* Detailed Stage Deep-Dive Card */}
-        <div className="glass-chrome-dark rounded-2xl p-6 sm:p-10 border border-white/15">
+        <div className="glass-chrome-dark rounded-3xl p-6 sm:p-10 border border-white/15 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Description & Technical Specs */}
             <div className="lg:col-span-6 space-y-6">
@@ -194,12 +194,12 @@ export default function PipelineSection() {
                 <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-mono text-xs font-bold text-amber-300 border border-white/20">
                   {activeStep.stepNumber}
                 </span>
-                <span className="font-mono text-xs uppercase tracking-widest text-white/60">
+                <span className="font-mono text-xs uppercase tracking-widest text-white/60 font-semibold">
                   {activeStep.badge}
                 </span>
               </div>
 
-              <h3 className="font-display text-2xl sm:text-3xl font-semibold text-white">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white">
                 {activeStep.title}
               </h3>
 
@@ -209,7 +209,7 @@ export default function PipelineSection() {
 
               {/* Technical bullet points */}
               <div className="space-y-3 pt-2">
-                <span className="font-mono text-xs uppercase tracking-wider text-amber-300 block font-semibold">
+                <span className="font-mono text-xs uppercase tracking-wider text-amber-300 block font-bold">
                   Engineering Highlights:
                 </span>
                 <ul className="space-y-2.5 text-xs sm:text-sm text-white/80 font-body">
@@ -225,7 +225,7 @@ export default function PipelineSection() {
               {/* Metric Callout */}
               <div className="p-3.5 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between">
                 <span className="font-mono text-xs text-white/60">Stage Benchmark</span>
-                <span className="font-mono text-xs font-semibold text-amber-300">
+                <span className="font-mono text-xs font-bold text-amber-300">
                   {activeStep.metric}
                 </span>
               </div>
@@ -233,12 +233,12 @@ export default function PipelineSection() {
 
             {/* Right Column: Code Implementation */}
             <div className="lg:col-span-6">
-              <div className="rounded-xl bg-[#090705] border border-white/15 overflow-hidden shadow-2xl">
+              <div className="rounded-2xl bg-[#090705] text-white border border-white/15 overflow-hidden shadow-2xl">
                 <div className="px-4 py-3 bg-black/80 border-b border-white/10 flex items-center justify-between">
                   <span className="font-mono text-xs text-white/50">
                     src/pipeline/stage_{activeStep.stepNumber.toLowerCase()}.py
                   </span>
-                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">
+                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/30">
                     Python 3.11
                   </span>
                 </div>
