@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { issueLicenseKey, PlanTier } from '@/lib/licensing/issuer';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   try {
     const { email, tier } = await req.json();

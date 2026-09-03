@@ -3,6 +3,8 @@ import crypto from 'crypto';
 import { firebaseDb } from '@/lib/firebase/admin';
 import { issueLicenseKey } from '@/lib/licensing/issuer';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
