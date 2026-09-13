@@ -8,8 +8,8 @@ const navLinks = [
   { label: 'CLI Simulator', href: '/#interactive-demo' },
   { label: '38 Connectors', href: '/connectors' },
   { label: 'Pipeline', href: '/#pipeline' },
-  { label: 'Why Offline', href: '/#why-offline' },
   { label: 'Pricing', href: '/#pricing' },
+  { label: 'Waitlist', href: '/waitlist' },
 ];
 
 export default function Nav() {

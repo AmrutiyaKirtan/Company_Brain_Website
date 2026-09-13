@@ -33,6 +33,9 @@ export default function Footer() {
             <Link href="/#pricing" className="hover:text-white transition-colors">
               Pricing
             </Link>
+            <Link href="/waitlist" className="hover:text-white transition-colors text-amber-300">
+              Waitlist
+            </Link>
           </div>
         </div>
 
