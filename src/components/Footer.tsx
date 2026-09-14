@@ -54,6 +54,26 @@ export default function Footer() {
             <span>Apache 2.0 / Commercial</span>
           </div>
         </div>
+
+        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[11px] font-mono text-white/40">
+            Featured on developer and AI tool directories
+          </p>
+          <a
+            href="https://peerpush.com/p/your-company-brain"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block transition-opacity hover:opacity-85"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://peerpush.com/p/your-company-brain/badge.png"
+              alt="Your Company Brain on PeerPush"
+              style={{ width: '230px' }}
+              className="h-auto"
+            />
+          </a>
+        </div>
       </div>
     </footer>
   );
