@@ -1,6 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+/* ─── Spring presets (Apple Design — critically damped) ──────── */
+const spring = { type: 'spring' as const, damping: 22, stiffness: 300, mass: 0.8 };
+const springBouncy = { type: 'spring' as const, damping: 16, stiffness: 280, mass: 0.9 };
+
+/* ─── Auto-expanding textarea height ────────────────────────── */
+function useAutoResize() {
+  const ref = useRef<HTMLTextAreaElement>(null);
+  const resize = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  }, []);
+  return { ref, resize };
+}
 
 export default function DemoSection() {
   const [status, setStatus] = useState<'default' | 'submitting' | 'submitted' | 'error'>('default');
@@ -9,25 +26,20 @@ export default function DemoSection() {
   const [message, setMessage] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [copiedCli, setCopiedCli] = useState(false);
+  const { ref: textareaRef, resize: resizeTextarea } = useAutoResize();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
     setErrorMsg('');
-
     try {
       const res = await fetch('/api/contact/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, message }),
       });
-
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to send message. Please try again.');
-      }
-
+      if (!res.ok) throw new Error(data.error || 'Failed to send message. Please try again.');
       setStatus('submitted');
     } catch (err: any) {
       setErrorMsg(err.message || 'Something went wrong. Please try again or email us directly.');
@@ -50,142 +62,331 @@ export default function DemoSection() {
   };
 
   return (
-    <section id="demo" className="bg-black py-16 md:py-24 border-t border-line-on-dark font-body text-white">
-      <div className="container mx-auto px-6 max-w-5xl">
-        <div className="glass-chrome-dark rounded-3xl border border-white/15 p-8 sm:p-12 shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left Side: Quick CTA */}
-            <div className="lg:col-span-7 space-y-4">
-              <span className="font-mono text-xs uppercase tracking-widest text-amber-300 font-bold block">
-                Get Started with YCB
-              </span>
-              <h2 className="font-display text-3xl sm:text-4xl text-white font-bold tracking-tight">
-                Run it locally or schedule a 15-min walkthrough.
+    <section id="demo" className="relative bg-black overflow-hidden font-body text-white">
+      {/* Radial ambient glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 80% 50% at 50% 100%, rgba(217,119,6,0.07) 0%, transparent 70%)',
+        }}
+      />
+
+      <div className="container mx-auto px-6 max-w-6xl py-20 md:py-32 relative z-10">
+        {/* Section label */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ ...spring, delay: 0.05 }}
+          className="flex items-center gap-3 mb-10"
+        >
+          <span className="block h-px w-8 bg-amber-500/50" />
+          <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-amber-400/80 font-medium">
+            Get Started
+          </span>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          {/* ── LEFT: Hero copy + CLI ──────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ ...spring, delay: 0.1 }}
+            className="lg:pt-4 space-y-8"
+          >
+            <div className="space-y-5">
+              <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.08]"
+                  style={{ letterSpacing: '-0.028em' }}>
+                Run locally.{' '}
+                <span className="text-white/50">Or schedule a</span>
+                <br />
+                15-min walkthrough.
               </h2>
-              <p className="font-body text-white/80 text-sm sm:text-base leading-relaxed">
-                Install the open-source CLI directly, or drop your work email for a tailored walkthrough reading your team&apos;s Slack and Notion offline.
+              <p className="font-body text-white/60 text-base sm:text-lg leading-relaxed max-w-md">
+                Install the open-source CLI directly, or drop your email for a tailored session — we&apos;ll walk through your Slack, Notion, and GitHub offline.
               </p>
+            </div>
 
-              {/* Quick CLI Copy Box */}
-              <div className="pt-2">
-                <div className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.04] border border-white/10 text-white font-mono text-xs">
-                  <div className="flex items-center gap-2 truncate">
-                    <span className="text-emerald-400 font-bold">$</span>
-                    <span className="text-amber-200">pip install ycb &amp;&amp; ycb init</span>
-                  </div>
-                  <button
-                    onClick={handleCopyCli}
-                    className="ml-3 px-3 py-1 rounded bg-white/10 hover:bg-white/20 text-white text-[11px] transition-all press-scale whitespace-nowrap"
-                  >
-                    {copiedCli ? '✓ Copied' : 'Copy'}
-                  </button>
+            {/* CLI Copy pill */}
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              transition={spring}
+            >
+              <div className="flex items-center justify-between px-5 py-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm">
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="text-emerald-400 font-mono font-bold text-sm shrink-0">$</span>
+                  <span className="text-amber-200/90 font-mono text-sm truncate">
+                    pip install ycb &amp;&amp; ycb init
+                  </span>
                 </div>
+                <motion.button
+                  onClick={handleCopyCli}
+                  whileTap={{ scale: 0.95 }}
+                  transition={spring}
+                  className="ml-4 shrink-0 px-3.5 py-1.5 rounded-xl text-[11px] font-mono font-medium transition-colors"
+                  style={{
+                    background: copiedCli ? 'rgba(52,211,153,0.12)' : 'rgba(255,255,255,0.08)',
+                    border: '1px solid',
+                    borderColor: copiedCli ? 'rgba(52,211,153,0.3)' : 'rgba(255,255,255,0.12)',
+                    color: copiedCli ? '#34d399' : 'rgba(255,255,255,0.75)',
+                  }}
+                >
+                  {copiedCli ? '✓ Copied' : 'Copy'}
+                </motion.button>
               </div>
+            </motion.div>
+
+            {/* Trust row */}
+            <div className="flex flex-wrap gap-x-6 gap-y-2 pt-2">
+              {['100% offline', 'Zero data leakage', 'Apache 2.0 open-source'].map((tag) => (
+                <span key={tag} className="flex items-center gap-1.5 text-[12px] font-mono text-white/35">
+                  <span className="w-1 h-1 rounded-full bg-emerald-500/60 inline-block" />
+                  {tag}
+                </span>
+              ))}
             </div>
+          </motion.div>
 
-            {/* Right Side: Contact Form */}
-            <div className="lg:col-span-5 bg-white/[0.03] p-6 sm:p-7 rounded-2xl border border-white/10">
-              {status === 'submitted' ? (
-                <div className="text-center py-6 space-y-3 animate-in zoom-in-95 duration-200">
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xl mx-auto border border-emerald-500/40">
-                    ✓
-                  </div>
-                  <h4 className="font-display font-semibold text-lg text-white">
-                    Walkthrough requested!
-                  </h4>
-                  <p className="text-xs text-white/75 leading-relaxed">
-                    We&apos;ll email <strong>{email}</strong> within 4 hours to coordinate your offline setup. Check your inbox for a confirmation.
-                  </p>
-                  <button
-                    onClick={handleReset}
-                    className="text-xs font-mono text-amber-300 hover:underline pt-2 block mx-auto"
+          {/* ── RIGHT: Contact form ────────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ ...spring, delay: 0.18 }}
+          >
+            {/* Glass card */}
+            <div
+              className="rounded-3xl border border-white/10 overflow-hidden"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                backdropFilter: 'blur(24px) saturate(160%)',
+                boxShadow: '0 0 0 1px rgba(255,255,255,0.06) inset, 0 32px 80px rgba(0,0,0,0.5)',
+              }}
+            >
+              <AnimatePresence mode="wait">
+                {status === 'submitted' ? (
+                  /* ── Success state ── */
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={springBouncy}
+                    className="p-8 sm:p-10 flex flex-col items-center text-center gap-5"
                   >
-                    Submit another inquiry
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-3.5">
-                  <h4 className="font-display font-semibold text-base text-white mb-1">
-                    Schedule a Guided Demo
-                  </h4>
-
-                  {/* Error state */}
-                  {status === 'error' && errorMsg && (
-                    <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-mono leading-relaxed">
-                      <span className="font-bold">Error: </span>{errorMsg}
+                    <motion.div
+                      initial={{ scale: 0, rotate: -15 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ ...springBouncy, delay: 0.1 }}
+                      className="w-14 h-14 rounded-full flex items-center justify-center text-2xl"
+                      style={{
+                        background: 'rgba(52,211,153,0.12)',
+                        border: '1px solid rgba(52,211,153,0.25)',
+                      }}
+                    >
+                      ✓
+                    </motion.div>
+                    <div className="space-y-2">
+                      <h3 className="font-display text-xl font-semibold text-white tracking-tight">
+                        Walkthrough requested!
+                      </h3>
+                      <p className="text-sm text-white/55 leading-relaxed max-w-xs">
+                        We&apos;ll email <strong className="text-white/80">{email}</strong> within 4 hours.
+                        A confirmation is on its way to your inbox.
+                      </p>
                     </div>
-                  )}
-
-                  {/* Name (optional) */}
-                  <div>
-                    <label htmlFor="demo-name" className="block font-mono text-[11px] text-white/60 mb-1">
-                      Your Name <span className="text-white/30">(optional)</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="demo-name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Kirtan Amrutiya"
-                      className="w-full bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm text-white rounded-lg focus:outline-none focus:border-white/40 transition-colors placeholder:text-white/25 font-mono"
-                    />
-                  </div>
-
-                  {/* Email (required) */}
-                  <div>
-                    <label htmlFor="demo-email" className="block font-mono text-[11px] text-white/60 mb-1">
-                      Work Email *
-                    </label>
-                    <input
-                      required
-                      type="email"
-                      id="demo-email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="kirtan@company.com"
-                      className="w-full bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm text-white rounded-lg focus:outline-none focus:border-white/40 transition-colors placeholder:text-white/25 font-mono"
-                    />
-                  </div>
-
-                  {/* Message (optional) */}
-                  <div>
-                    <label htmlFor="demo-message" className="block font-mono text-[11px] text-white/60 mb-1">
-                      Message <span className="text-white/30">(optional)</span>
-                    </label>
-                    <textarea
-                      id="demo-message"
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Tell us about your stack — which tools you use, team size, what you'd like to learn..."
-                      rows={3}
-                      className="w-full bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm text-white rounded-lg focus:outline-none focus:border-white/40 transition-colors placeholder:text-white/25 font-mono resize-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={status === 'submitting'}
-                    className="btn btn-primary-dark w-full py-3 rounded-lg text-xs font-semibold tracking-wider uppercase shadow-lg flex items-center justify-center gap-2 disabled:opacity-60"
+                    <button
+                      onClick={handleReset}
+                      className="mt-2 text-xs font-mono text-amber-400/70 hover:text-amber-300 transition-colors"
+                    >
+                      Submit another inquiry →
+                    </button>
+                  </motion.div>
+                ) : (
+                  /* ── Form state ── */
+                  <motion.form
+                    key="form"
+                    onSubmit={handleSubmit}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="p-8 sm:p-10 space-y-0"
                   >
-                    {status === 'submitting' ? (
-                      <>
-                        <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" />
-                        <span>Sending...</span>
-                      </>
-                    ) : (
-                      'Book Walkthrough →'
-                    )}
-                  </button>
+                    {/* Form header */}
+                    <div className="mb-7">
+                      <h3
+                        className="font-display text-xl font-semibold text-white mb-1.5"
+                        style={{ letterSpacing: '-0.02em' }}
+                      >
+                        Schedule a Guided Demo
+                      </h3>
+                      <p className="text-[13px] text-white/45 leading-relaxed">
+                        We&apos;ll tailor it to your stack — Notion, Slack, GitHub, or all 38 connectors.
+                      </p>
+                    </div>
 
-                  <p className="text-[10px] text-white/40 text-center font-mono">
-                    Zero spam. 100% offline-first privacy guarantee.
-                  </p>
-                </form>
-              )}
+                    {/* Error banner */}
+                    <AnimatePresence>
+                      {status === 'error' && errorMsg && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                          animate={{ opacity: 1, height: 'auto', marginBottom: 20 }}
+                          exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                          transition={spring}
+                          className="rounded-xl overflow-hidden"
+                          style={{
+                            background: 'rgba(239,68,68,0.08)',
+                            border: '1px solid rgba(239,68,68,0.2)',
+                          }}
+                        >
+                          <p className="px-4 py-3 text-red-300 text-[13px] font-mono leading-relaxed">
+                            {errorMsg}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Fields */}
+                    <div className="space-y-4">
+                      {/* Name */}
+                      <FormField label="Your Name" hint="optional">
+                        <input
+                          type="text"
+                          id="demo-name"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Kirtan Amrutiya"
+                          autoComplete="name"
+                          className="demo-input"
+                        />
+                      </FormField>
+
+                      {/* Email */}
+                      <FormField label="Work Email" required>
+                        <input
+                          required
+                          type="email"
+                          id="demo-email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="kirtan@company.com"
+                          autoComplete="email"
+                          className="demo-input"
+                        />
+                      </FormField>
+
+                      {/* Message — auto-expanding, no scrollbar */}
+                      <FormField label="Message" hint="optional">
+                        <textarea
+                          ref={textareaRef}
+                          id="demo-message"
+                          value={message}
+                          onChange={(e) => {
+                            setMessage(e.target.value);
+                            resizeTextarea();
+                          }}
+                          placeholder="Tell us about your stack — tools, team size, what you'd like to see..."
+                          rows={3}
+                          className="demo-input resize-none overflow-hidden"
+                          style={{ minHeight: '80px' }}
+                        />
+                      </FormField>
+                    </div>
+
+                    {/* CTA button */}
+                    <motion.button
+                      type="submit"
+                      disabled={status === 'submitting'}
+                      whileTap={{ scale: 0.98 }}
+                      transition={spring}
+                      className="mt-6 w-full py-3.5 rounded-2xl text-[13px] font-semibold tracking-wide flex items-center justify-center gap-2.5 transition-opacity disabled:opacity-50"
+                      style={{
+                        background: 'var(--white)',
+                        color: 'var(--black)',
+                        boxShadow: '0 2px 20px rgba(245,238,219,0.15)',
+                        letterSpacing: '0.01em',
+                      }}
+                    >
+                      {status === 'submitting' ? (
+                        <>
+                          <span
+                            className="w-3.5 h-3.5 rounded-full border-2 border-black/20 border-t-black animate-spin inline-block"
+                          />
+                          <span>Sending…</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Book Walkthrough</span>
+                          <span className="opacity-50">→</span>
+                        </>
+                      )}
+                    </motion.button>
+
+                    <p className="mt-4 text-[11px] text-center font-mono text-white/25 tracking-wide">
+                      Zero spam · 100% offline-first
+                    </p>
+                  </motion.form>
+                )}
+              </AnimatePresence>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
+
+      {/* Input styles — injected inline to avoid Tailwind purge of dynamic focus styles */}
+      <style>{`
+        .demo-input {
+          width: 100%;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 12px;
+          padding: 11px 14px;
+          font-size: 13.5px;
+          color: #f5eedb;
+          font-family: var(--font-ibm-plex-mono);
+          outline: none;
+          transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease;
+          -webkit-appearance: none;
+          appearance: none;
+          scrollbar-width: none;
+        }
+        .demo-input::-webkit-scrollbar { display: none; }
+        .demo-input::-webkit-contacts-auto-fill-button,
+        .demo-input::-webkit-credentials-auto-fill-button { visibility: hidden; }
+        .demo-input::placeholder { color: rgba(245,238,219,0.2); }
+        .demo-input:focus {
+          border-color: rgba(245,238,219,0.28);
+          background: rgba(255,255,255,0.07);
+          box-shadow: 0 0 0 3px rgba(245,238,219,0.05);
+        }
+      `}</style>
     </section>
+  );
+}
+
+/* ── Small helper for label + field wrapper ── */
+function FormField({
+  label,
+  required,
+  hint,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <label className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-white/40 mb-2 font-medium">
+        {label}
+        {required && <span className="text-amber-500/60">*</span>}
+        {hint && <span className="text-white/20 normal-case tracking-normal">{hint}</span>}
+      </label>
+      {children}
+    </div>
   );
 }
