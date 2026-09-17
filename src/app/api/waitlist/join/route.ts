@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { firebaseDb } from '@/lib/firebase/admin';
+import { sendOwnerNotification } from '@/lib/email/sender';
 
 export const dynamic = 'force-dynamic';
 
@@ -118,6 +119,30 @@ export async function POST(req: NextRequest) {
     };
 
     await waitlistRef.set(newEntry);
+
+    // Fire-and-forget owner notification — wrapped so a failed email never breaks signup
+    sendOwnerNotification(
+      `🎉 New YCB waitlist signup: ${normalizedEmail}`,
+      `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#14100c;">
+        <h2 style="font-size:20px;font-weight:700;margin-bottom:16px;">🎉 New Waitlist Signup — YCB</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <tr style="border-bottom:1px solid #e5dfd5;">
+            <td style="padding:10px 8px;font-weight:600;color:#555;width:30%;">Email</td>
+            <td style="padding:10px 8px;">${normalizedEmail}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #e5dfd5;">
+            <td style="padding:10px 8px;font-weight:600;color:#555;">Source</td>
+            <td style="padding:10px 8px;">${typeof source === 'string' && source ? source.slice(0, 64) : 'website_waitlist'}</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 8px;font-weight:600;color:#555;">Signed Up At</td>
+            <td style="padding:10px 8px;">${timestamp}</td>
+          </tr>
+        </table>
+        <hr style="border:none;border-top:1px solid #e5dfd5;margin:24px 0 12px 0;"/>
+        <p style="font-size:12px;color:#aaa;">YCB Waitlist · Firebase RTDB key: waitlist/${emailHash.slice(0, 12)}...</p>
+      </div>`
+    ).catch((e) => console.error('[Waitlist] Owner notification failed (non-critical):', e));
 
     return NextResponse.json({
       success: true,

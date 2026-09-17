@@ -3,22 +3,50 @@
 import { useState } from 'react';
 
 export default function DemoSection() {
-  const [status, setStatus] = useState<'default' | 'submitting' | 'submitted'>('default');
+  const [status, setStatus] = useState<'default' | 'submitting' | 'submitted' | 'error'>('default');
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [copiedCli, setCopiedCli] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    setTimeout(() => {
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/contact/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send message. Please try again.');
+      }
+
       setStatus('submitted');
-    }, 1000);
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Something went wrong. Please try again or email us directly.');
+      setStatus('error');
+    }
   };
 
   const handleCopyCli = () => {
     navigator.clipboard.writeText('pip install ycb && ycb init');
     setCopiedCli(true);
     setTimeout(() => setCopiedCli(false), 2000);
+  };
+
+  const handleReset = () => {
+    setStatus('default');
+    setEmail('');
+    setName('');
+    setMessage('');
+    setErrorMsg('');
   };
 
   return (
@@ -55,7 +83,7 @@ export default function DemoSection() {
               </div>
             </div>
 
-            {/* Right Side: Fast 1-Click Form */}
+            {/* Right Side: Contact Form */}
             <div className="lg:col-span-5 bg-white/[0.03] p-6 sm:p-7 rounded-2xl border border-white/10">
               {status === 'submitted' ? (
                 <div className="text-center py-6 space-y-3 animate-in zoom-in-95 duration-200">
@@ -66,24 +94,47 @@ export default function DemoSection() {
                     Walkthrough requested!
                   </h4>
                   <p className="text-xs text-white/75 leading-relaxed">
-                    We will email <strong>{email}</strong> within 4 hours to coordinate your offline setup.
+                    We&apos;ll email <strong>{email}</strong> within 4 hours to coordinate your offline setup. Check your inbox for a confirmation.
                   </p>
                   <button
-                    onClick={() => setStatus('default')}
+                    onClick={handleReset}
                     className="text-xs font-mono text-amber-300 hover:underline pt-2 block mx-auto"
                   >
                     Submit another inquiry
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <h4 className="font-display font-semibold text-base text-white">
+                <form onSubmit={handleSubmit} className="space-y-3.5">
+                  <h4 className="font-display font-semibold text-base text-white mb-1">
                     Schedule a Guided Demo
                   </h4>
 
+                  {/* Error state */}
+                  {status === 'error' && errorMsg && (
+                    <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-mono leading-relaxed">
+                      <span className="font-bold">Error: </span>{errorMsg}
+                    </div>
+                  )}
+
+                  {/* Name (optional) */}
+                  <div>
+                    <label htmlFor="demo-name" className="block font-mono text-[11px] text-white/60 mb-1">
+                      Your Name <span className="text-white/30">(optional)</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="demo-name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Kirtan Amrutiya"
+                      className="w-full bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm text-white rounded-lg focus:outline-none focus:border-white/40 transition-colors placeholder:text-white/25 font-mono"
+                    />
+                  </div>
+
+                  {/* Email (required) */}
                   <div>
                     <label htmlFor="demo-email" className="block font-mono text-[11px] text-white/60 mb-1">
-                      Work Email
+                      Work Email *
                     </label>
                     <input
                       required
@@ -92,16 +143,38 @@ export default function DemoSection() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="kirtan@company.com"
-                      className="w-full bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm text-white rounded-lg focus:outline-none focus:border-white transition-colors placeholder:text-white/30"
+                      className="w-full bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm text-white rounded-lg focus:outline-none focus:border-white/40 transition-colors placeholder:text-white/25 font-mono"
+                    />
+                  </div>
+
+                  {/* Message (optional) */}
+                  <div>
+                    <label htmlFor="demo-message" className="block font-mono text-[11px] text-white/60 mb-1">
+                      Message <span className="text-white/30">(optional)</span>
+                    </label>
+                    <textarea
+                      id="demo-message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Tell us about your stack — which tools you use, team size, what you'd like to learn..."
+                      rows={3}
+                      className="w-full bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm text-white rounded-lg focus:outline-none focus:border-white/40 transition-colors placeholder:text-white/25 font-mono resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={status === 'submitting'}
-                    className="btn btn-primary-dark w-full py-3 rounded-lg text-xs font-semibold tracking-wider uppercase shadow-lg"
+                    className="btn btn-primary-dark w-full py-3 rounded-lg text-xs font-semibold tracking-wider uppercase shadow-lg flex items-center justify-center gap-2 disabled:opacity-60"
                   >
-                    {status === 'submitting' ? 'Submitting...' : 'Book Walkthrough &rarr;'}
+                    {status === 'submitting' ? (
+                      <>
+                        <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      'Book Walkthrough →'
+                    )}
                   </button>
 
                   <p className="text-[10px] text-white/40 text-center font-mono">
