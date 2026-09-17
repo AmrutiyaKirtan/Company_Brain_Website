@@ -73,30 +73,24 @@ export default function DemoSection() {
       />
 
       <div className="container mx-auto px-6 max-w-6xl py-20 md:py-32 relative z-10">
-        {/* Section label */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ ...spring, delay: 0.05 }}
-          className="flex items-center gap-3 mb-10"
-        >
-          <span className="block h-px w-8 bg-amber-500/50" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-amber-400/80 font-medium">
-            Get Started
-          </span>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* ── LEFT: Hero copy + CLI ──────────────────────────────── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ ...spring, delay: 0.1 }}
-            className="lg:pt-4 space-y-8"
+            className="space-y-6 lg:space-y-8"
           >
-            <div className="space-y-5">
+            {/* Section kicker */}
+            <div className="flex items-center gap-3">
+              <span className="block h-px w-8 bg-amber-500/50" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-amber-400/80 font-medium">
+                Get Started
+              </span>
+            </div>
+
+            <div className="space-y-4 sm:space-y-5">
               <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.08]"
                   style={{ letterSpacing: '-0.028em' }}>
                 Run locally.{' '}
@@ -174,7 +168,7 @@ export default function DemoSection() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={springBouncy}
-                    className="p-8 sm:p-10 flex flex-col items-center text-center gap-5"
+                    className="p-7 sm:p-9 flex flex-col items-center text-center gap-5"
                   >
                     <motion.div
                       initial={{ scale: 0, rotate: -15 }}
@@ -213,10 +207,10 @@ export default function DemoSection() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="p-8 sm:p-10 space-y-0"
+                    className="p-7 sm:p-9 space-y-0"
                   >
                     {/* Form header */}
-                    <div className="mb-7">
+                    <div className="mb-6">
                       <h3
                         className="font-display text-xl font-semibold text-white mb-1.5"
                         style={{ letterSpacing: '-0.02em' }}
