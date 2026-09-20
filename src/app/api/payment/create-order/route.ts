@@ -21,8 +21,8 @@ export async function POST(req: NextRequest) {
 
     const razorpay = new Razorpay({ key_id, key_secret });
 
-    // ₹299 -> 29900 paise
-    const amount = 29900;
+    // ₹1 test mode -> 100 paise (Razorpay min amount)
+    const amount = 100;
     const currency = 'INR';
 
     const order = await razorpay.orders.create({

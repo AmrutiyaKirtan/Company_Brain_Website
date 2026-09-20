@@ -97,7 +97,7 @@ export default function PricingSection() {
         amount: orderData.amount,
         currency: orderData.currency,
         name: 'YCB (Your Company Brain)',
-        description: 'Max Tier Subscription (₹299/mo)',
+        description: 'Max Tier Test (₹1)',
         order_id: orderData.order_id,
         prefill: {
           email: email.trim().toLowerCase(),
@@ -263,7 +263,7 @@ export default function PricingSection() {
                 Max Tier
               </h3>
               <div className="text-3xl font-display font-bold text-white mb-4">
-                ₹299 <span className="text-xs font-mono text-white/60 font-normal">/ month</span>
+                ₹1 <span className="text-xs font-mono text-amber-300 font-normal">/ test</span>
               </div>
 
               <p className="font-body text-white/80 text-xs sm:text-sm mb-6 leading-relaxed">
