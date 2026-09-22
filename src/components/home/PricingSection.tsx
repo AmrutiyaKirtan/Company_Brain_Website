@@ -299,7 +299,7 @@ export default function PricingSection() {
               className="btn btn-primary-dark text-xs py-3 rounded-xl w-full text-center font-semibold tracking-wider"
               data-cursor-label="BUY"
             >
-              Get Max (₹299/mo) &rarr;
+              Get Max (₹1) &rarr;
             </button>
           </div>
 
@@ -389,7 +389,7 @@ export default function PricingSection() {
                 </span>
                 <h3 className="font-display text-xl font-bold text-ink">
                   {modalTier === 'max'
-                    ? 'Subscribe to Max (₹299/mo)'
+                    ? 'Subscribe to Max (₹1)'
                     : 'Get your license key'}
                 </h3>
               </div>
@@ -451,7 +451,7 @@ export default function PricingSection() {
                 {loading
                   ? 'Processing...'
                   : modalTier === 'max'
-                  ? 'Proceed to Payment (₹299) →'
+                  ? 'Proceed to Payment (₹1) →'
                   : 'Generate License Key →'}
               </button>
             </form>
