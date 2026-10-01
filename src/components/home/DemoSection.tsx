@@ -25,7 +25,6 @@ export default function DemoSection() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const [copiedCli, setCopiedCli] = useState(false);
   const { ref: textareaRef, resize: resizeTextarea } = useAutoResize();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,16 +40,11 @@ export default function DemoSection() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to send message. Please try again.');
       setStatus('submitted');
-    } catch (err: any) {
-      setErrorMsg(err.message || 'Something went wrong. Please try again or email us directly.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Something went wrong. Please try again or email us directly.';
+      setErrorMsg(message);
       setStatus('error');
     }
-  };
-
-  const handleCopyCli = () => {
-    navigator.clipboard.writeText('pip install ycb && ycb init');
-    setCopiedCli(true);
-    setTimeout(() => setCopiedCli(false), 2000);
   };
 
   const handleReset = () => {
@@ -93,50 +87,19 @@ export default function DemoSection() {
             <div className="space-y-4 sm:space-y-5">
               <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.08]"
                   style={{ letterSpacing: '-0.028em' }}>
-                Run locally.{' '}
-                <span className="text-white/50">Or schedule a</span>
-                <br />
-                15-min walkthrough.
+                Schedule a 15-minute{' '}
+                <span className="text-white/50">walkthrough.</span>
               </h2>
-              <p className="font-body text-white/60 text-base sm:text-lg leading-relaxed max-w-md">
-                Install the open-source CLI directly, or drop your email for a tailored session — we&apos;ll walk through your Slack, Notion, and GitHub offline.
+              <p className="font-body text-white/70 text-base sm:text-lg leading-relaxed max-w-md">
+                See how YCB searches your workspace tools privately on your own computer. We&apos;ll answer any questions and help you get set up.
               </p>
             </div>
 
-            {/* CLI Copy pill */}
-            <motion.div
-              whileHover={{ scale: 1.01 }}
-              transition={spring}
-            >
-              <div className="flex items-center justify-between px-5 py-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm">
-                <div className="flex items-center gap-3 min-w-0">
-                  <span className="text-emerald-400 font-mono font-bold text-sm shrink-0">$</span>
-                  <span className="text-amber-200/90 font-mono text-sm truncate">
-                    pip install ycb &amp;&amp; ycb init
-                  </span>
-                </div>
-                <motion.button
-                  onClick={handleCopyCli}
-                  whileTap={{ scale: 0.95 }}
-                  transition={spring}
-                  className="ml-4 shrink-0 px-3.5 py-1.5 rounded-xl text-[11px] font-mono font-medium transition-colors"
-                  style={{
-                    background: copiedCli ? 'rgba(52,211,153,0.12)' : 'rgba(255,255,255,0.08)',
-                    border: '1px solid',
-                    borderColor: copiedCli ? 'rgba(52,211,153,0.3)' : 'rgba(255,255,255,0.12)',
-                    color: copiedCli ? '#34d399' : 'rgba(255,255,255,0.75)',
-                  }}
-                >
-                  {copiedCli ? '✓ Copied' : 'Copy'}
-                </motion.button>
-              </div>
-            </motion.div>
-
             {/* Trust row */}
             <div className="flex flex-wrap gap-x-6 gap-y-2 pt-2">
-              {['100% offline', 'Zero data leakage', 'Apache 2.0 open-source'].map((tag) => (
-                <span key={tag} className="flex items-center gap-1.5 text-[12px] font-mono text-white/35">
-                  <span className="w-1 h-1 rounded-full bg-emerald-500/60 inline-block" />
+              {['Runs locally by default', 'No credit card required', 'Private & secure'].map((tag) => (
+                <span key={tag} className="flex items-center gap-1.5 text-[12px] font-mono text-white/50">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
                   {tag}
                 </span>
               ))}

@@ -5,9 +5,8 @@ import Link from 'next/link';
 
 const navLinks = [
   { label: 'How it works', href: '/#how-it-works' },
-  { label: 'CLI Simulator', href: '/#interactive-demo' },
   { label: '38 Connectors', href: '/connectors' },
-  { label: 'Pipeline', href: '/#pipeline' },
+  { label: 'Technical details', href: '/how-it-works' },
   { label: 'Pricing', href: '/#pricing' },
   { label: 'Waitlist', href: '/waitlist' },
 ];

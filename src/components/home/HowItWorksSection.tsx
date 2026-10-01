@@ -2,84 +2,56 @@ export default function HowItWorksSection() {
   const steps = [
     {
       step: '01',
-      label: 'CONNECT',
-      title: 'Connect across 38 tools',
-      desc: 'YCB hooks into Slack, Notion, GitHub, Google Workspace, Linear, and Jira via unified BaseConnector handlers with rate-limit backoff.',
+      title: 'Connect your everyday tools',
+      desc: 'Connect your tools in a few minutes across Slack, Google Drive, Notion, and GitHub. Setup is straightforward and requires no complicated infrastructure.',
     },
     {
       step: '02',
-      label: 'INGEST',
-      title: 'Idempotent batch ingestion',
-      desc: 'Pulls messages, pull requests, docs, and incident threads in structured batches with cryptographic deduplication. It never processes the same item twice.',
+      title: 'Ask questions in plain English',
+      desc: 'Type what you need to know just like messaging a teammate. Ask about internal procedures, past decisions, or project updates.',
     },
     {
       step: '03',
-      label: 'PROCESS LOCALLY',
-      title: 'Local AI model inference',
-      desc: 'Runs Gemma 4 locally via Ollama on localhost:11434. Your raw messages and confidential discussions never leave your internal infrastructure.',
-    },
-    {
-      step: '04',
-      label: 'EXTRACT',
-      title: 'Single-call concept extraction',
-      desc: 'Simultaneously classifies content type (procedure, policy, decision, incident) and extracts key concepts, halving API latency with heuristic confidence scoring.',
-    },
-    {
-      step: '05',
-      label: 'SYNTHESIZE',
-      title: 'Synthesize Pydantic Skill cards',
-      desc: 'Related concepts are clustered into domain models with explicit step-by-step procedures, prerequisites, if/then decision rules, and edge cases.',
-    },
-    {
-      step: '06',
-      label: 'DELIVER',
-      title: 'Export & terminal Q&A',
-      desc: 'Outputs clean skills_file.json for autonomous AI agents (LangChain, AutoGen) and enables multi-turn terminal natural-language search with ycb --ask.',
+      title: 'Get instant, private answers',
+      desc: 'Receive direct answers with source references to the exact message or document. Everything runs on your own hardware by default.',
     },
   ];
 
   return (
-    <section id="how-it-works" className="bg-black py-20 md:py-32 overflow-hidden border-t border-line-on-dark font-body text-white">
-      <div className="container mx-auto px-6 max-w-4xl relative">
+    <section id="how-it-works" className="bg-black py-20 md:py-28 border-t border-line-on-dark font-body text-white">
+      <div className="container mx-auto px-6 max-w-5xl">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="font-mono text-xs uppercase tracking-widest text-muted-on-dark mb-3 block">
-            End-to-End Workflow
+            How It Works
           </span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-semibold tracking-tight">
-            How YCB works
+          <h2 className="font-display text-3xl sm:text-4xl text-white font-semibold tracking-tight">
+            Three simple steps to a searchable company brain.
           </h2>
         </div>
 
-        {/* Central timeline line */}
-        <div className="absolute left-6 md:left-1/2 top-36 bottom-12 w-[1px] bg-line-on-dark transform md:-translate-x-1/2 hidden md:block"></div>
-        <div className="absolute left-[39px] top-36 bottom-12 w-[1px] bg-line-on-dark md:hidden"></div>
-
-        <div className="space-y-0">
-          {steps.map((item) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+          {steps.map((item, idx) => (
             <div
               key={item.step}
-              className="hover-row dark-section relative flex flex-col md:flex-row md:items-center py-10 group hover:bg-white/[0.03] transition-all rounded-2xl"
+              className="bg-white/[0.03] border border-white/10 rounded-3xl p-8 relative flex flex-col justify-between"
             >
-              <div className="md:w-1/2 md:pr-12 md:text-right flex flex-col md:items-end z-10 pl-16 md:pl-0 mb-4 md:mb-0 relative">
-                <span className="font-mono text-amber-400 text-xs mb-1.5 group-hover:text-amber-300 transition-colors font-bold">
-                  {item.step} / {item.label}
+              <div>
+                <span className="font-mono text-3xl font-bold text-amber-400/80 mb-6 block">
+                  {item.step}
                 </span>
-                <h3 className="font-display font-semibold text-white text-xl sm:text-2xl">
+                <h3 className="font-display text-xl font-bold text-white mb-3">
                   {item.title}
                 </h3>
-
-                {/* Mobile diamond node */}
-                <div className="md:hidden absolute left-[15px] top-[14px] w-2.5 h-2.5 border border-line-on-dark-strong bg-black rotate-45 z-20 group-hover:border-amber-400 transition-colors"></div>
-              </div>
-
-              {/* Desktop center diamond node */}
-              <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 border border-line-on-dark-strong bg-black rotate-45 z-20 group-hover:border-amber-400 group-hover:scale-125 transition-all"></div>
-
-              <div className="md:w-1/2 md:pl-12 z-10 pl-16 md:pl-0">
-                <p className="font-body text-white/75 text-sm sm:text-base max-w-[42ch] group-hover:text-white transition-colors leading-relaxed">
+                <p className="font-body text-sm sm:text-base text-white/70 leading-relaxed">
                   {item.desc}
                 </p>
               </div>
+
+              {idx < steps.length - 1 && (
+                <div className="hidden md:block absolute -right-4 top-1/2 -translate-y-1/2 z-10 text-white/20 text-xl font-mono">
+                  &rarr;
+                </div>
+              )}
             </div>
           ))}
         </div>

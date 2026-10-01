@@ -75,14 +75,14 @@ export default function StatsSection() {
                 04 / PRIVACY
               </span>
               <div className="font-display text-4xl sm:text-5xl font-bold text-emerald-400 mb-2 tracking-tight">
-                100%
+                Local
               </div>
               <h3 className="font-display font-semibold text-lg text-white mb-2">
-                Local Sovereignty
+                Local by Default
               </h3>
             </div>
             <p className="font-body text-xs sm:text-sm text-white/70 leading-relaxed">
-              Inference (Gemma 4 via Ollama), ingestion, chunking, and SQLite storage all execute on your own servers.
+              Inference runs on your own computer by default, with optional cloud models (OpenAI, Claude, OpenRouter) available whenever you need them.
             </p>
           </div>
         </div>

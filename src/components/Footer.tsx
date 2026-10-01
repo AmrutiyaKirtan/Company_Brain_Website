@@ -21,13 +21,13 @@ export default function Footer() {
             <Link href="/#how-it-works" className="hover:text-white transition-colors">
               How It Works
             </Link>
-            <Link href="/#interactive-demo" className="hover:text-white transition-colors">
-              CLI Simulator
+            <Link href="/how-it-works" className="hover:text-white transition-colors">
+              Technical Details
             </Link>
             <Link href="/connectors" className="hover:text-white transition-colors">
               38 Connectors
             </Link>
-            <Link href="/#pipeline" className="hover:text-white transition-colors">
+            <Link href="/how-it-works#pipeline" className="hover:text-white transition-colors">
               5-Stage Pipeline
             </Link>
             <Link href="/#pricing" className="hover:text-white transition-colors">

@@ -177,10 +177,10 @@ export default function PricingSection() {
             Pricing &amp; Editions
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-ink font-semibold tracking-tight mb-4">
-            Start offline for free. Unlock all 38 connectors when ready.
+            Start free on your computer. Unlock all 38 tools when ready.
           </h2>
           <p className="font-body text-ink/75 text-base sm:text-lg">
-            Instant self-serve license key issuance. Deploy on your local terminal with 100% offline sovereignty.
+            Instant self-serve license key issuance. Install with <code className="font-mono text-sm bg-black/5 px-1.5 py-0.5 rounded text-ink">pip install ycb</code> and activate in seconds.
           </p>
         </div>
 
@@ -206,29 +206,29 @@ export default function PricingSection() {
               </div>
 
               <p className="font-body text-ink/75 text-xs sm:text-sm mb-6 leading-relaxed">
-                Essential local knowledge synthesis for individual engineers and founders.
+                Essential local search for individual founders and developers.
               </p>
 
               <ul className="space-y-2.5 font-body text-xs sm:text-sm text-ink/85 mb-8">
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
-                  <span><strong>2 Basic Connectors</strong> (Google Docs + Slack)</span>
+                  <span><strong>2 Starter Connectors</strong> (Google Docs + Slack)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
-                  <span>100% offline local inference (Gemma 4 via Ollama)</span>
+                  <span>Runs on your computer by default</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
-                  <span>Terminal natural-language search (<code>ycb --ask</code>)</span>
+                  <span>Ask questions directly in terminal (<code>ycb --ask</code>)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
-                  <span>Single-machine hardware binding (1 seat)</span>
+                  <span>Single-machine license (1 seat)</span>
                 </li>
                 <li className="flex items-start gap-2 text-ink/40">
                   <span>✕</span>
-                  <span>36 remaining enterprise connectors</span>
+                  <span>36 additional workspace connectors</span>
                 </li>
               </ul>
             </div>
@@ -267,7 +267,7 @@ export default function PricingSection() {
               </div>
 
               <p className="font-body text-white/80 text-xs sm:text-sm mb-6 leading-relaxed">
-                Full enterprise connector suite with multi-provider model routing and priority chunking.
+                Full access to all 38 workspace tools and multi-provider models.
               </p>
 
               <ul className="space-y-2.5 font-body text-xs sm:text-sm text-white/85 mb-8">
@@ -277,15 +277,15 @@ export default function PricingSection() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
-                  <span>Multi-provider model switcher (Claude, OpenAI, OpenRouter)</span>
+                  <span>Works with local models and optional cloud providers</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
-                  <span>Idempotent batch sync &amp; deduplication</span>
+                  <span>Automatic data synchronization across your team&apos;s tools</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
-                  <span>Unlimited generated Skill cards (<code>skills_file.json</code>)</span>
+                  <span>Full company knowledge procedures export</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
@@ -323,29 +323,29 @@ export default function PricingSection() {
               </div>
 
               <p className="font-body text-ink/75 text-xs sm:text-sm mb-6 leading-relaxed">
-                For security-conscious organizations deploying across multi-tenant air-gapped clusters.
+                For security-conscious organizations with custom team setups.
               </p>
 
               <ul className="space-y-2.5 font-body text-xs sm:text-sm text-ink/85 mb-8">
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
-                  <span>All 38 connectors with OAuth 2.0 &amp; SAML SSO</span>
+                  <span>All 38 connectors with team single sign-on</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
-                  <span>Dedicated private GPU cluster deployment</span>
+                  <span>Dedicated private infrastructure deployment</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
-                  <span>Custom connector engineering &amp; data retention policies</span>
+                  <span>Custom connector support and retention rules</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
-                  <span>Multi-seat licensing with manual provisioning</span>
+                  <span>Multi-seat team licensing</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
-                  <span>99.9% uptime SLA &amp; dedicated support engineer</span>
+                  <span>Dedicated onboarding and support</span>
                 </li>
               </ul>
             </div>
