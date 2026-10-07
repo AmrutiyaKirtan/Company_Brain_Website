@@ -67,6 +67,96 @@ export default function DemoSection() {
       />
 
       <div className="container mx-auto px-6 max-w-6xl py-20 md:py-32 relative z-10">
+
+        {/* ── VIDEO DEMO ──────────────────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ ...spring, delay: 0.05 }}
+          className="mb-16 md:mb-24"
+        >
+          {/* Section label */}
+          <div className="flex items-center gap-3 mb-6">
+            <span className="block h-px w-8 bg-amber-500/50" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-amber-400/80 font-medium">
+              Product Demo
+            </span>
+          </div>
+
+          <h2
+            className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white leading-[1.08] mb-4"
+            style={{ letterSpacing: '-0.026em' }}
+          >
+            Watch it in action.
+          </h2>
+          <p className="font-body text-white/55 text-sm sm:text-base leading-relaxed mb-8 max-w-xl">
+            See Your Company Brain search across Slack, Notion, and GitHub — all on your own computer.
+          </p>
+
+          {/* Glass video frame */}
+          <div
+            className="relative w-full rounded-3xl overflow-hidden"
+            style={{
+              background: 'rgba(255,255,255,0.04)',
+              backdropFilter: 'blur(24px) saturate(160%)',
+              boxShadow:
+                '0 0 0 1px rgba(255,255,255,0.08) inset, 0 40px 120px rgba(0,0,0,0.65)',
+              border: '1px solid rgba(255,255,255,0.09)',
+            }}
+          >
+            {/* Top chrome bar */}
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
+              <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+              <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+              <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+              <span className="ml-3 font-mono text-[11px] text-white/25 tracking-wide">
+                YCB · Product Demo
+              </span>
+              <a
+                href="https://youtu.be/0OTAAECdEyI"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-auto font-mono text-[11px] text-amber-400/60 hover:text-amber-300 transition-colors flex items-center gap-1"
+              >
+                <span>Open in YouTube</span>
+                <span className="opacity-70">↗</span>
+              </a>
+            </div>
+
+            {/* 16:9 responsive video */}
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                src="https://www.youtube.com/embed/0OTAAECdEyI?rel=0&modestbranding=1&color=white&iv_load_policy=3"
+                title="Your Company Brain — Product Demo"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+                className="absolute inset-0 w-full h-full"
+                style={{ border: 'none' }}
+              />
+            </div>
+          </div>
+
+          {/* Fallback CTA for no-iframe environments */}
+          <div className="mt-5 text-center">
+            <a
+              href="https://youtu.be/0OTAAECdEyI"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-mono text-[12px] font-semibold text-white/70 hover:text-white transition-colors"
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              <span className="w-2 h-2 rounded-full bg-red-500 inline-block" />
+              Watch Demo on YouTube
+              <span className="opacity-50">→</span>
+            </a>
+          </div>
+        </motion.div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* ── LEFT: Hero copy + CLI ──────────────────────────────── */}
           <motion.div
@@ -283,7 +373,7 @@ export default function DemoSection() {
                     </motion.button>
 
                     <p className="mt-4 text-[11px] text-center font-mono text-white/25 tracking-wide">
-                      Zero spam · 100% offline-first
+                      Zero spam · Local-first by default
                     </p>
                   </motion.form>
                 )}
