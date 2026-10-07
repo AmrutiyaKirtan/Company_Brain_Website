@@ -97,7 +97,7 @@ export default function PricingSection() {
         amount: orderData.amount,
         currency: orderData.currency,
         name: 'YCB (Your Company Brain)',
-        description: 'Max Tier Test (₹1)',
+        description: 'Max Tier Subscription (₹299/mo)',
         order_id: orderData.order_id,
         prefill: {
           email: email.trim().toLowerCase(),
@@ -263,7 +263,7 @@ export default function PricingSection() {
                 Max Tier
               </h3>
               <div className="text-3xl font-display font-bold text-white mb-4">
-                ₹1 <span className="text-xs font-mono text-amber-300 font-normal">/ test</span>
+                ₹299 <span className="text-xs font-mono text-amber-300 font-normal">/ month</span>
               </div>
 
               <p className="font-body text-white/80 text-xs sm:text-sm mb-6 leading-relaxed">
@@ -299,7 +299,7 @@ export default function PricingSection() {
               className="btn btn-primary-dark text-xs py-3 rounded-xl w-full text-center font-semibold tracking-wider"
               data-cursor-label="BUY"
             >
-              Get Max (₹1) &rarr;
+              Get Max (₹299) &rarr;
             </button>
           </div>
 
@@ -389,7 +389,7 @@ export default function PricingSection() {
                 </span>
                 <h3 className="font-display text-xl font-bold text-ink">
                   {modalTier === 'max'
-                    ? 'Subscribe to Max (₹1)'
+                    ? 'Subscribe to Max (₹299)'
                     : 'Get your license key'}
                 </h3>
               </div>
@@ -451,7 +451,7 @@ export default function PricingSection() {
                 {loading
                   ? 'Processing...'
                   : modalTier === 'max'
-                  ? 'Proceed to Payment (₹1) →'
+                  ? 'Proceed to Payment (₹299) →'
                   : 'Generate License Key →'}
               </button>
             </form>
