@@ -13,11 +13,11 @@ export default function Footer() {
               YCB <span className="text-white/60 font-normal text-sm">(Your Company Brain)</span>
             </Link>
             <p className="font-mono text-xs uppercase tracking-wider text-muted-on-dark">
-              Automated, offline-first knowledge extraction pipeline for AI agents.
+              Automated, local-first knowledge extraction pipeline for AI agents.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-8 text-xs font-mono text-white/80">
+          <div className="flex flex-wrap gap-6 text-xs font-mono text-white/80">
             <Link href="/#how-it-works" className="hover:text-white transition-colors">
               How It Works
             </Link>
@@ -27,11 +27,17 @@ export default function Footer() {
             <Link href="/connectors" className="hover:text-white transition-colors">
               38 Connectors
             </Link>
-            <Link href="/how-it-works#pipeline" className="hover:text-white transition-colors">
-              5-Stage Pipeline
+            <Link href="/docs" className="hover:text-white transition-colors">
+              Docs
             </Link>
-            <Link href="/#pricing" className="hover:text-white transition-colors">
+            <Link href="/install" className="hover:text-white transition-colors">
+              Install
+            </Link>
+            <Link href="/pricing" className="hover:text-white transition-colors">
               Pricing
+            </Link>
+            <Link href="/about" className="hover:text-white transition-colors">
+              About
             </Link>
             <Link href="/waitlist" className="hover:text-white transition-colors text-amber-300">
               Waitlist
@@ -45,7 +51,7 @@ export default function Footer() {
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               v3.2.2 Live
             </span>
-            <span>100% Local Inference &bull; Zero External Data Transmission</span>
+            <span>Runs locally by default &bull; Optional cloud models</span>
           </div>
 
           <div className="flex items-center gap-4 text-white/60">

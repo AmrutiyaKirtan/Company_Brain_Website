@@ -8,9 +8,21 @@ import StatsSection from '@/components/home/StatsSection';
 import WhoItsForSection from '@/components/home/WhoItsForSection';
 
 export const metadata: Metadata = {
-  title: 'Technical Architecture & Deep Dive | YCB',
+  title: 'How It Works',
   description:
-    "Explore YCB's technical architecture: 38 unified connectors, local model inference by default, Pydantic skill synthesis, and terminal CLI tools.",
+    'Explore the architecture of Your Company Brain: 38 unified connectors, local model inference by default, and terminal search for startup teams.',
+  alternates: {
+    canonical: 'https://yourcompanybrain.vercel.app/how-it-works',
+  },
+  openGraph: {
+    title: 'How It Works | Your Company Brain',
+    description:
+      'Explore the architecture of Your Company Brain: 38 unified connectors, local model inference by default, and terminal search for startup teams.',
+    url: 'https://yourcompanybrain.vercel.app/how-it-works',
+    siteName: 'Your Company Brain',
+    locale: 'en_US',
+    type: 'website',
+  },
 };
 
 export default function HowItWorksTechnicalPage() {

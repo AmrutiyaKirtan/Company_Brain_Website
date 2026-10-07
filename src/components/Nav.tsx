@@ -5,9 +5,11 @@ import Link from 'next/link';
 
 const navLinks = [
   { label: 'How it works', href: '/#how-it-works' },
-  { label: '38 Connectors', href: '/connectors' },
-  { label: 'Technical details', href: '/how-it-works' },
-  { label: 'Pricing', href: '/#pricing' },
+  { label: 'Connectors', href: '/connectors' },
+  { label: 'Docs', href: '/docs' },
+  { label: 'Install', href: '/install' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'About', href: '/about' },
   { label: 'Waitlist', href: '/waitlist' },
 ];
 
@@ -47,12 +49,12 @@ export default function Nav() {
           </Link>
           <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono tracking-wider bg-white/10 text-white/90 border border-white/15 font-semibold shrink-0 whitespace-nowrap ml-1">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0 inline-block"></span>
-            <span>v3.2.2 • Offline</span>
+            <span>v3.2.2 • Local</span>
           </div>
         </div>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-5 lg:gap-7 shrink-0">
+        <div className="hidden lg:flex items-center gap-4 xl:gap-6 shrink-0">
           {navLinks.map((link) => (
             <Link
               key={link.label}
@@ -72,10 +74,10 @@ export default function Nav() {
           </Link>
         </div>
 
-        {/* Mobile hamburger */}
+        {/* Mobile / Tablet hamburger */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden flex flex-col justify-center items-center gap-[5px] w-9 h-9 rounded-full bg-white/10 border border-white/15 press-scale text-white shrink-0"
+          className="lg:hidden flex flex-col justify-center items-center gap-[5px] w-9 h-9 rounded-full bg-white/10 border border-white/15 press-scale text-white shrink-0"
           aria-label={open ? 'Close menu' : 'Open menu'}
           data-cursor-label="MENU"
         >
@@ -99,7 +101,7 @@ export default function Nav() {
 
       {/* Mobile menu drawer */}
       {open && (
-        <div className="max-w-6xl mx-auto mt-2 rounded-2xl glass-chrome-dark p-6 flex flex-col gap-4 md:hidden animate-in fade-in slide-in-from-top-2 duration-200 shadow-2xl">
+        <div className="max-w-6xl mx-auto mt-2 rounded-2xl glass-chrome-dark p-6 flex flex-col gap-4 lg:hidden animate-in fade-in slide-in-from-top-2 duration-200 shadow-2xl">
           <div className="flex items-center justify-between pb-3 border-b border-white/10">
             <span className="font-mono text-xs text-white/80 font-semibold">
               YCB Navigation

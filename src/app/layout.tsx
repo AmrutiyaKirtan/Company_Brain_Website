@@ -29,9 +29,22 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'YCB (Your Company Brain) | Local-First AI Knowledge Engine',
+  metadataBase: new URL('https://yourcompanybrain.vercel.app'),
+  title: {
+    default: 'Your Company Brain | Local-First AI Knowledge Engine',
+    template: '%s | Your Company Brain',
+  },
   description:
-    'YCB (Your Company Brain) connects to 38 tools across Slack, Notion, GitHub, and Docs, extracting structured procedure cards for AI agents entirely offline with zero data leakage.',
+    'Search across Slack, Google Drive, Notion, and GitHub without your data leaving your computer by default. Instant company answers for startup teams.',
+  openGraph: {
+    title: 'Your Company Brain | Local-First AI Knowledge Engine',
+    description:
+      'Search across Slack, Google Drive, Notion, and GitHub without your data leaving your computer by default. Instant company answers for startup teams.',
+    url: 'https://yourcompanybrain.vercel.app',
+    siteName: 'Your Company Brain',
+    locale: 'en_US',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
