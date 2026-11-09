@@ -132,8 +132,10 @@ export default function ConnectorsDirectory() {
               </div>
 
               <div className="pt-3 border-t border-line-on-light flex items-center justify-between font-mono text-[11px] text-muted-on-light">
-                <span className="truncate max-w-[150px]"><code>{c.dedupKey}</code></span>
-                <span className="text-ink font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                <span className="truncate max-w-[130px]"><code>{c.dedupKey}</code></span>
+                <span className="text-[10px] font-mono text-emerald-800 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30 group-hover:bg-emerald-500/20 transition-colors font-medium">
+                  View Scopes &rarr;
+                </span>
               </div>
             </div>
           ))}
@@ -191,6 +193,31 @@ export default function ConnectorsDirectory() {
                     Deduplication & Idempotency Key:
                   </span>
                   <code className="text-emerald-300 text-xs">{selectedConnector.dedupKey}</code>
+                </div>
+
+                <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-white/50 text-[10px] uppercase font-mono">
+                      Exact Read-Only Permissions / Scopes:
+                    </span>
+                    <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/30">
+                      Tokens Stay on Device
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mt-1.5">
+                    {selectedConnector.readOnlyScopes && selectedConnector.readOnlyScopes.length > 0 ? (
+                      selectedConnector.readOnlyScopes.map((scope) => (
+                        <code
+                          key={scope}
+                          className="text-[11px] font-mono bg-black/50 text-emerald-300 px-2 py-0.5 rounded border border-white/10 select-all"
+                        >
+                          {scope}
+                        </code>
+                      ))
+                    ) : (
+                      <span className="text-white/60 text-xs">Read-only API access</span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="p-3 bg-white/5 rounded-lg border border-white/10">

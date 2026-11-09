@@ -118,6 +118,38 @@ export default function DocsPage() {
           </div>
         </div>
 
+        {/* Trust & Architecture Principles */}
+        <div id="cloud-models" className="mb-14 p-6 sm:p-8 rounded-3xl bg-white border-2 border-line-on-light-strong shadow-sm space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-xs uppercase tracking-widest text-muted-on-light font-semibold">
+              Security Architecture
+            </span>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-100 text-emerald-800 border border-emerald-300 font-semibold">
+              Verified
+            </span>
+          </div>
+          <h2 className="font-display text-2xl font-bold text-ink">
+            Who Holds What: 3 Verifiable Facts
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs text-ink/90 pt-2">
+            <div className="p-3.5 rounded-xl bg-paper border border-line-on-light">
+              <span className="font-bold text-emerald-700 block mb-1">1. Local OAuth</span>
+              <span>OAuth loopback runs strictly on 127.0.0.1:8765 using PKCE.</span>
+            </div>
+            <div className="p-3.5 rounded-xl bg-paper border border-line-on-light">
+              <span className="font-bold text-emerald-700 block mb-1">2. Local Storage</span>
+              <span>Tokens never leave your device (~/.ycb/oauth_tokens.json).</span>
+            </div>
+            <div className="p-3.5 rounded-xl bg-paper border border-line-on-light">
+              <span className="font-bold text-emerald-700 block mb-1">3. Minimal Server</span>
+              <span>Our license server only stores your key and login email.</span>
+            </div>
+          </div>
+          <p className="font-body text-xs text-ink/75 leading-relaxed pt-1">
+            <strong>The Cloud Model Exception:</strong> YCB uses local Ollama models (Gemma 4) by default, transmitting zero text outside your machine. If you explicitly switch to a cloud provider via <code className="font-mono bg-black/5 px-1 py-0.5 rounded">ycb switch model</code>, retrieved context snippets are transmitted directly to that provider over TLS.
+          </p>
+        </div>
+
         {/* Resources & Linking Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white border border-line-on-light rounded-2xl p-6 shadow-sm flex flex-col justify-between">

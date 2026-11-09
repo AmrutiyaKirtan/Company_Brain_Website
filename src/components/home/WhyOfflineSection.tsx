@@ -6,17 +6,20 @@ export default function WhyOfflineSection() {
           {/* Left copy */}
           <div className="w-full lg:w-1/2">
             <span className="font-mono text-xs uppercase tracking-widest text-muted-on-light mb-3 block">
-              Zero-Data-Leakage Guarantee
+              Verifiable Trust Boundaries
             </span>
             <h2 className="shine font-display text-4xl sm:text-5xl text-ink font-semibold tracking-tight mb-6 leading-[1.08]">
-              Your company data never leaves your hardware.
+              Who holds what: An honest breakdown.
             </h2>
             <div className="space-y-4 font-body text-ink/80 text-base sm:text-lg leading-relaxed">
-              <p>
-                Confidential Slack threads, salary discussions, security post-mortems, and customer PII should never be transmitted to third-party cloud AI vendors.
+              <p className="font-semibold text-ink">
+                OAuth runs on your machine. Tokens never leave your device. Our server only stores a license key and login email.
               </p>
               <p>
-                Company Brain executes inference locally via Ollama (Gemma 4), stores raw data and chunks in an on-premise SQLite database, and enforces strict offline idempotency.
+                Confidential Slack threads, salary discussions, security post-mortems, and customer records never touch YCB servers. Company Brain executes inference locally via Ollama (Gemma 4) and stores chunks in an on-premise SQLite database.
+              </p>
+              <p className="text-xs text-muted-on-light bg-black/5 p-3 rounded-xl border border-line-on-light font-mono">
+                Note on Cloud Models: If you deliberately configure an external model (OpenAI, Claude), retrieved search excerpts are transmitted to that provider for generation. Zero text leaves your network when using default local models.
               </p>
             </div>
 

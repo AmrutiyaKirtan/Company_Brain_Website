@@ -13,7 +13,7 @@ export default function HeroSection() {
         {/* Floating pill */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 shadow-lg mb-8 text-xs font-mono text-white/90">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0 inline-block"></span>
-          <span>Private &bull; Runs on your device by default</span>
+          <span>Verified Architecture: Zero Tokens on Our Servers</span>
         </div>
 
         {/* Hero headline */}
@@ -25,10 +25,15 @@ export default function HeroSection() {
           .
         </h1>
 
-        {/* Subhead: max 2 short sentences */}
-        <p className="font-body text-white/80 max-w-[54ch] mb-8 text-base sm:text-lg md:text-xl leading-relaxed">
-          Search across Slack, Google Drive, Notion, and GitHub without your company data leaving your machine by default. Optional cloud models are available whenever you want them.
-        </p>
+        {/* Subhead: The 3 plain sentences + cloud model transparency */}
+        <div className="max-w-[62ch] mb-8 space-y-3 text-center">
+          <p className="font-body text-white/90 text-base sm:text-lg md:text-xl leading-relaxed font-medium">
+            OAuth runs on your machine. Tokens never leave your device. Our server only stores a license key and login email.
+          </p>
+          <p className="font-body text-white/65 text-xs sm:text-sm leading-relaxed">
+            Search Slack, Google Drive, Notion, and GitHub with local models by default. (If you configure an optional cloud provider like OpenAI or Claude, retrieved text goes to that provider.)
+          </p>
+        </div>
 
         {/* Single Main CTA */}
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-6">

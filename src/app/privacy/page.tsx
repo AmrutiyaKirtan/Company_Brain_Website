@@ -41,7 +41,7 @@ export default function PrivacyPolicyPage() {
               Your Company Brain (&ldquo;YCB&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;) is an offline-first knowledge extraction tool for engineering and operations teams. We are committed to minimizing data collection and respecting user privacy.
             </p>
             <p className="p-4 rounded-xl bg-paper-dark/50 border border-line-on-light font-mono text-xs text-ink/90">
-              <strong>Core Privacy Architecture:</strong> The YCB desktop software/CLI processes your workspace documents (Slack, GitHub, Notion, Jira, Docs, etc.) locally on your machine using local LLM inference (e.g., Ollama / Gemma) by default. Your source documents, vector embeddings, and generated procedures are stored on your local drive (e.g. <code className="bg-white/80 px-1 py-0.5 rounded">data/company_brain.db</code>) and are <strong>not</strong> transmitted to YCB servers.
+              <strong>Core Trust Architecture:</strong> 1. OAuth runs on your machine. 2. Tokens never leave your device (~/.ycb/oauth_tokens.json). 3. Our server only stores your license key and login email. The YCB software processes your workspace documents locally using on-device models by default. Your source documents, vector embeddings, and search indices are stored on your local drive (<code className="bg-white/80 px-1 py-0.5 rounded">data/company_brain.db</code>). If you deliberately configure an optional third-party cloud model (e.g. OpenAI or Anthropic), retrieved context snippets are sent directly from your device to that provider over TLS.
             </p>
           </section>
 

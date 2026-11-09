@@ -10,6 +10,7 @@ export interface Connector {
   simpleIconKey: string | null;
   customSvgPath?: string;
   status: 'live' | 'coming-soon';
+  readOnlyScopes?: string[];
 }
 
 /**
@@ -71,6 +72,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: SLACK_PATH,
     status: 'live',
+    readOnlyScopes: ['channels:history', 'channels:read', 'groups:history', 'groups:read', 'team:read', 'users:read'],
   },
   {
     name: 'Google Docs',
@@ -83,6 +85,7 @@ export const connectors: Connector[] = [
     dedupKey: 'gdoc:{doc_id}',
     simpleIconKey: 'siGoogledocs',
     status: 'live',
+    readOnlyScopes: ['https://www.googleapis.com/auth/documents.readonly', 'https://www.googleapis.com/auth/drive.readonly'],
   },
   {
     name: 'Google Sheets',
@@ -95,6 +98,7 @@ export const connectors: Connector[] = [
     dedupKey: 'gsheet:{spreadsheet_id}:{sheet_name}',
     simpleIconKey: 'siGooglesheets',
     status: 'live',
+    readOnlyScopes: ['https://www.googleapis.com/auth/spreadsheets.readonly', 'https://www.googleapis.com/auth/drive.readonly'],
   },
   {
     name: 'Google Drive',
@@ -107,6 +111,7 @@ export const connectors: Connector[] = [
     dedupKey: 'gdrive:{file_id}',
     simpleIconKey: 'siGoogledrive',
     status: 'live',
+    readOnlyScopes: ['https://www.googleapis.com/auth/drive.readonly'],
   },
   {
     name: 'Gmail',
@@ -119,6 +124,7 @@ export const connectors: Connector[] = [
     dedupKey: 'gmail:{message_id}',
     simpleIconKey: 'siGmail',
     status: 'live',
+    readOnlyScopes: ['https://www.googleapis.com/auth/gmail.readonly'],
   },
   {
     name: 'GitHub',
@@ -131,6 +137,7 @@ export const connectors: Connector[] = [
     dedupKey: 'github:{repo}:{issue_number}',
     simpleIconKey: 'siGithub',
     status: 'live',
+    readOnlyScopes: ['repo (read contents)', 'read:org', 'read:user'],
   },
   {
     name: 'Notion',
@@ -143,6 +150,7 @@ export const connectors: Connector[] = [
     dedupKey: 'notion:{page_id}',
     simpleIconKey: 'siNotion',
     status: 'live',
+    readOnlyScopes: ['read_content (pages, databases & blocks)'],
   },
   {
     name: 'Discord',
@@ -155,6 +163,7 @@ export const connectors: Connector[] = [
     dedupKey: 'discord:{channel_id}:{message_id}',
     simpleIconKey: 'siDiscord',
     status: 'live',
+    readOnlyScopes: ['bot (view channels, read message history)'],
   },
   {
     name: 'Linear',
@@ -167,6 +176,7 @@ export const connectors: Connector[] = [
     dedupKey: 'linear:{issue_id}',
     simpleIconKey: 'siLinear',
     status: 'live',
+    readOnlyScopes: ['read (issues, cycles, comments)'],
   },
   {
     name: 'Microsoft Outlook',
@@ -180,6 +190,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: OUTLOOK_PATH,
     status: 'live',
+    readOnlyScopes: ['Mail.Read', 'User.Read', 'offline_access'],
   },
   {
     name: 'Microsoft Teams',
@@ -193,6 +204,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: TEAMS_PATH,
     status: 'live',
+    readOnlyScopes: ['ChannelMessage.Read.All', 'User.Read', 'offline_access'],
   },
 
   // ── Tier 2: Extended Dev, File & Search Sources (10) ──
@@ -207,6 +219,7 @@ export const connectors: Connector[] = [
     dedupKey: 'gitlab:{project}:{type}:{iid}',
     simpleIconKey: 'siGitlab',
     status: 'live',
+    readOnlyScopes: ['read_api', 'read_user'],
   },
   {
     name: 'Dropbox',
@@ -219,6 +232,7 @@ export const connectors: Connector[] = [
     dedupKey: 'dropbox:{file_id}',
     simpleIconKey: 'siDropbox',
     status: 'live',
+    readOnlyScopes: ['files.metadata.read', 'files.content.read'],
   },
   {
     name: 'Mixpanel',
@@ -231,6 +245,7 @@ export const connectors: Connector[] = [
     dedupKey: 'mixpanel:event_schema:{project_id}',
     simpleIconKey: 'siMixpanel',
     status: 'live',
+    readOnlyScopes: ['events:read (analytics schema & funnels)'],
   },
   {
     name: 'Amplitude',
@@ -244,6 +259,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: AMPLITUDE_PATH,
     status: 'live',
+    readOnlyScopes: ['taxonomy:read (event schema & taxonomy)'],
   },
   {
     name: 'Algolia',
@@ -256,6 +272,7 @@ export const connectors: Connector[] = [
     dedupKey: 'algolia:{index}:{objectID}',
     simpleIconKey: 'siAlgolia',
     status: 'live',
+    readOnlyScopes: ['search (indices, records & facets)'],
   },
   {
     name: 'Exa AI',
@@ -269,6 +286,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: EXA_PATH,
     status: 'live',
+    readOnlyScopes: ['search:query (domain-specific research)'],
   },
   {
     name: 'Perplexity AI',
@@ -281,6 +299,7 @@ export const connectors: Connector[] = [
     dedupKey: 'perplexity:{hash(prompt)}',
     simpleIconKey: 'siPerplexity',
     status: 'live',
+    readOnlyScopes: ['completions:read (citations & queries)'],
   },
   {
     name: 'Facebook Pages',
@@ -293,6 +312,7 @@ export const connectors: Connector[] = [
     dedupKey: 'facebook:{post_id}',
     simpleIconKey: 'siFacebook',
     status: 'live',
+    readOnlyScopes: ['pages_read_engagement', 'pages_read_user_content'],
   },
   {
     name: 'Todoist',
@@ -305,6 +325,7 @@ export const connectors: Connector[] = [
     dedupKey: 'todoist:{task_id}',
     simpleIconKey: 'siTodoist',
     status: 'live',
+    readOnlyScopes: ['data:read'],
   },
   {
     name: 'Web Crawler',
@@ -318,6 +339,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: WEB_CRAWLER_PATH,
     status: 'live',
+    readOnlyScopes: ['http:get (internal documentation domains)'],
   },
 
   // ── Tier 3: Project Management, Issue Tracking & Analytics (8) ──
@@ -332,6 +354,7 @@ export const connectors: Connector[] = [
     dedupKey: 'jira:{issue_key}',
     simpleIconKey: 'siJira',
     status: 'live',
+    readOnlyScopes: ['read:jira-work', 'read:jira-user'],
   },
   {
     name: 'Asana',
@@ -344,6 +367,7 @@ export const connectors: Connector[] = [
     dedupKey: 'asana:{task_gid}',
     simpleIconKey: 'siAsana',
     status: 'live',
+    readOnlyScopes: ['default (read-only project tasks)'],
   },
   {
     name: 'ClickUp',
@@ -356,6 +380,7 @@ export const connectors: Connector[] = [
     dedupKey: 'clickup:{task_id}',
     simpleIconKey: 'siClickup',
     status: 'live',
+    readOnlyScopes: ['task:read', 'space:read'],
   },
   {
     name: 'Airtable',
@@ -368,6 +393,7 @@ export const connectors: Connector[] = [
     dedupKey: 'airtable:{base_id}:{record_id}',
     simpleIconKey: 'siAirtable',
     status: 'live',
+    readOnlyScopes: ['data.records:read', 'schema.bases:read'],
   },
   {
     name: 'Monday.com',
@@ -381,6 +407,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: MONDAY_PATH,
     status: 'live',
+    readOnlyScopes: ['boards:read', 'updates:read'],
   },
   {
     name: 'Basecamp',
@@ -393,6 +420,7 @@ export const connectors: Connector[] = [
     dedupKey: 'basecamp:{recording_id}',
     simpleIconKey: 'siBasecamp',
     status: 'live',
+    readOnlyScopes: ['read (messages, to-dos, docs)'],
   },
   {
     name: 'Datadog',
@@ -405,6 +433,7 @@ export const connectors: Connector[] = [
     dedupKey: 'datadog:{incident_id}',
     simpleIconKey: 'siDatadog',
     status: 'live',
+    readOnlyScopes: ['monitors_read', 'incidents_read'],
   },
   {
     name: 'Segment',
@@ -418,6 +447,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: SEGMENT_PATH,
     status: 'live',
+    readOnlyScopes: ['tracking_plans:read'],
   },
 
   // ── Tier 4: CRM, Support, HR & Enterprise (10) ──
@@ -433,6 +463,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: FRONT_PATH,
     status: 'live',
+    readOnlyScopes: ['shared_inboxes:read', 'conversations:read'],
   },
   {
     name: 'Zoom',
@@ -445,6 +476,7 @@ export const connectors: Connector[] = [
     dedupKey: 'zoom:{meeting_id}',
     simpleIconKey: 'siZoom',
     status: 'live',
+    readOnlyScopes: ['recording:read:admin', 'user:read:admin'],
   },
   {
     name: 'Twitter / X',
@@ -457,6 +489,7 @@ export const connectors: Connector[] = [
     dedupKey: 'twitter:{tweet_id}',
     simpleIconKey: 'siX',
     status: 'live',
+    readOnlyScopes: ['tweet.read', 'users.read', 'offline.access'],
   },
   {
     name: 'HubSpot',
@@ -469,6 +502,7 @@ export const connectors: Connector[] = [
     dedupKey: 'hubspot:{object_type}:{id}',
     simpleIconKey: 'siHubspot',
     status: 'live',
+    readOnlyScopes: ['crm.objects.contacts.read', 'crm.objects.companies.read', 'crm.objects.deals.read'],
   },
   {
     name: 'Salesforce',
@@ -482,6 +516,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: SALESFORCE_PATH,
     status: 'live',
+    readOnlyScopes: ['api (read-only queries)', 'refresh_token', 'offline_access'],
   },
   {
     name: 'Calendly',
@@ -494,6 +529,7 @@ export const connectors: Connector[] = [
     dedupKey: 'calendly:{event_uuid}',
     simpleIconKey: 'siCalendly',
     status: 'live',
+    readOnlyScopes: ['events:read', 'user:read'],
   },
   {
     name: 'Ashby',
@@ -507,6 +543,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: ASHBY_PATH,
     status: 'live',
+    readOnlyScopes: ['job_requisitions:read', 'candidates:read'],
   },
   {
     name: 'BambooHR',
@@ -520,6 +557,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: BAMBOO_PATH,
     status: 'live',
+    readOnlyScopes: ['announcements:read', 'company_directory:read'],
   },
   {
     name: 'Deel',
@@ -533,6 +571,7 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: DEEL_PATH,
     status: 'live',
+    readOnlyScopes: ['contracts:read', 'compliance_documents:read'],
   },
   {
     name: 'Rippling',
@@ -546,5 +585,6 @@ export const connectors: Connector[] = [
     simpleIconKey: null,
     customSvgPath: RIPPLING_PATH,
     status: 'live',
+    readOnlyScopes: ['policies:read', 'handbooks:read'],
   },
 ];
