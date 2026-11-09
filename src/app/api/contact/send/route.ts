@@ -1,12 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
 import { sendEmail, sendOwnerNotification, getNotifyEmail } from '@/lib/email/sender';
+import { firebaseDb } from '@/lib/firebase/admin';
 
 export const dynamic = 'force-dynamic';
+
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 3;
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export async function POST(req: NextRequest) {
   try {
+    // --- IP Rate Limiting (3 contact submissions per minute) ---
+    const forwardedFor = req.headers.get('x-forwarded-for');
+    const realIp = req.headers.get('x-real-ip');
+    const clientIp = (forwardedFor ? forwardedFor.split(',')[0].trim() : realIp) || '127.0.0.1';
+    const ipHash = crypto.createHash('sha256').update(clientIp).digest('hex').slice(0, 16);
+    const rateLimitRef = firebaseDb.ref(`rate_limits/contact/${ipHash}`);
+    const rateLimitSnap = await rateLimitRef.once('value');
+    const now = Date.now();
+    if (rateLimitSnap.exists()) {
+      const rateData = rateLimitSnap.val();
+      if (now < rateData.reset_at) {
+        if (rateData.count >= MAX_REQUESTS_PER_WINDOW) {
+          return NextResponse.json(
+            { error: 'Too many requests. Please wait a minute before trying again.' },
+            { status: 429 }
+          );
+        }
+        await rateLimitRef.update({ count: (rateData.count || 0) + 1 });
+      } else {
+        await rateLimitRef.set({ count: 1, reset_at: now + RATE_LIMIT_WINDOW_MS });
+      }
+    } else {
+      await rateLimitRef.set({ count: 1, reset_at: now + RATE_LIMIT_WINDOW_MS });
+    }
+
     const body = await req.json().catch(() => ({}));
     const { name, email, message } = body;
 

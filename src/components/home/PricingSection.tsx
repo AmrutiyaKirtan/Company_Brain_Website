@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import LicenseModal from '@/components/licensing/LicenseModal';
 
 declare global {
@@ -10,6 +11,8 @@ declare global {
 }
 
 export default function PricingSection() {
+  const isMaxFree = process.env.NEXT_PUBLIC_MAX_FREE !== 'false';
+
   // Modal states
   const [modalTier, setModalTier] = useState<'solo' | 'max' | 'test' | null>(null);
   const [email, setEmail] = useState('');
@@ -38,8 +41,31 @@ export default function PricingSection() {
     setLoading(false);
   };
 
-  // Submit handler for Free (Solo or Test)
-  const handleIssueFree = async (tier: 'solo' | 'test') => {
+  useEffect(() => {
+    if (!modalTier) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleCloseInputModal();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalTier]);
+
+  const loadRazorpayScript = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (typeof window !== 'undefined' && window.Razorpay) {
+        return resolve(true);
+      }
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.async = true;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  // Submit handler for Free (Solo, Test, or Free Max)
+  const handleIssueFree = async (tier: 'solo' | 'max' | 'test') => {
     setLoading(true);
     setErrorMsg('');
 
@@ -87,9 +113,10 @@ export default function PricingSection() {
         throw new Error(orderData.error || 'Failed to create order');
       }
 
-      // Verify Razorpay SDK is loaded
-      if (typeof window.Razorpay === 'undefined') {
-        throw new Error('Razorpay SDK is not loaded yet. Please refresh the page.');
+      // Ensure Razorpay SDK is loaded dynamically
+      const isLoaded = await loadRazorpayScript();
+      if (!isLoaded || typeof window.Razorpay === 'undefined') {
+        throw new Error('Razorpay SDK failed to load. Please check your internet connection.');
       }
 
       const options = {
@@ -162,7 +189,11 @@ export default function PricingSection() {
     if (!email) return;
 
     if (modalTier === 'max') {
-      handleCheckoutMax();
+      if (isMaxFree) {
+        handleIssueFree('max');
+      } else {
+        handleCheckoutMax();
+      }
     } else if (modalTier === 'solo' || modalTier === 'test') {
       handleIssueFree(modalTier);
     }
@@ -177,7 +208,7 @@ export default function PricingSection() {
             Pricing &amp; Editions
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-ink font-semibold tracking-tight mb-4">
-            Start free on your computer. Unlock all 38 tools when ready.
+            Start free on your computer. Unlock all 39 tools when ready.
           </h2>
           <p className="font-body text-ink/75 text-base sm:text-lg">
             Instant self-serve license key issuance. Install with <code className="font-mono text-sm bg-black/5 px-1.5 py-0.5 rounded text-ink">pip install ycb</code> and activate in seconds.
@@ -228,7 +259,7 @@ export default function PricingSection() {
                 </li>
                 <li className="flex items-start gap-2 text-ink/40">
                   <span>✕</span>
-                  <span>36 additional workspace connectors</span>
+                  <span>37 additional workspace connectors</span>
                 </li>
               </ul>
             </div>
@@ -242,11 +273,11 @@ export default function PricingSection() {
             </button>
           </div>
 
-          {/* 2. Max Tier (₹299/mo) - Highlighted */}
+          {/* 2. Max Tier - Highlighted */}
           <div className="border-2 border-amber-500/60 bg-[#14100c] text-white p-7 sm:p-8 rounded-3xl flex flex-col justify-between shadow-2xl relative overflow-hidden">
             {/* Top recommendation ribbon */}
             <div className="absolute top-0 right-0 bg-amber-500 text-black text-[10px] font-mono font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-              Most Popular
+              {isMaxFree ? 'Free for now' : 'Most Popular'}
             </div>
 
             <div>
@@ -255,25 +286,38 @@ export default function PricingSection() {
                   Pro / Max
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-amber-400/20 text-amber-200 border border-amber-400/30 font-semibold">
-                  ALL 38 CONNECTORS
+                  ALL 39 CONNECTORS
                 </span>
               </div>
 
               <h3 className="font-display font-bold text-2xl sm:text-3xl text-white mb-2">
                 Max Tier
               </h3>
-              <div className="text-3xl font-display font-bold text-white mb-4">
-                ₹299 <span className="text-xs font-mono text-amber-300 font-normal">/ month</span>
+              <div className="text-3xl font-display font-bold text-white mb-2">
+                {isMaxFree ? (
+                  <>
+                    $0 <span className="text-xs font-mono text-amber-300 font-normal">/ FREE</span>
+                  </>
+                ) : (
+                  <>
+                    ₹299 <span className="text-xs font-mono text-amber-300 font-normal">/ month</span>
+                  </>
+                )}
               </div>
+              {isMaxFree && (
+                <div className="text-[11px] font-mono text-amber-400/90 mb-4 font-semibold tracking-wide">
+                  Free for now &bull; All 39 connectors unlocked
+                </div>
+              )}
 
               <p className="font-body text-white/80 text-xs sm:text-sm mb-6 leading-relaxed">
-                Full access to all 38 workspace tools and multi-provider models.
+                Full access to all 39 workspace tools and multi-provider models.
               </p>
 
               <ul className="space-y-2.5 font-body text-xs sm:text-sm text-white/85 mb-8">
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
-                  <span><strong>All 38 Connectors Unlocked</strong> (GitHub, Notion, Jira, Linear, etc.)</span>
+                  <span><strong>All 39 Connectors Unlocked</strong> (GitHub, Notion, Jira, Linear, etc.)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
@@ -289,7 +333,7 @@ export default function PricingSection() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
-                  <span>Instant Razorpay activation</span>
+                  <span>Instant self-serve license key activation</span>
                 </li>
               </ul>
             </div>
@@ -297,9 +341,9 @@ export default function PricingSection() {
             <button
               onClick={() => handleOpenModal('max')}
               className="btn btn-primary-dark text-xs py-3 rounded-xl w-full text-center font-semibold tracking-wider"
-              data-cursor-label="BUY"
+              data-cursor-label={isMaxFree ? 'FREE' : 'BUY'}
             >
-              Get Max (₹299) &rarr;
+              {isMaxFree ? 'Get Max License (Free) →' : 'Get Max (₹299) →'}
             </button>
           </div>
 
@@ -329,7 +373,7 @@ export default function PricingSection() {
               <ul className="space-y-2.5 font-body text-xs sm:text-sm text-ink/85 mb-8">
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
-                  <span>All 38 connectors with team single sign-on</span>
+                  <span>All 39 connectors with team single sign-on</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 font-bold">✓</span>
@@ -363,7 +407,7 @@ export default function PricingSection() {
         {/* Permanent Test Tier Trigger */}
         <div className="text-center pt-2">
           <p className="text-xs font-mono text-muted-on-light">
-            Need to evaluate full 38-connector capabilities?{' '}
+            Need to evaluate full 39-connector capabilities?{' '}
             <button
               onClick={() => handleOpenModal('test')}
               className="text-ink font-semibold underline hover:text-amber-800 transition-colors"
@@ -376,25 +420,31 @@ export default function PricingSection() {
 
       {/* Input Modal for Solo / Max / Test */}
       {modalTier && (
-        <div className="fixed inset-0 z-[1900] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="pricing-modal-title"
+          className="fixed inset-0 z-[1900] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200"
+        >
           <div className="relative w-full max-w-md bg-white text-ink border border-line-on-light rounded-3xl p-6 sm:p-8 shadow-2xl font-body">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <span className="font-mono text-xs uppercase tracking-wider text-amber-800 font-bold block mb-1">
                   {modalTier === 'max'
-                    ? 'Pro / Max Checkout'
+                    ? (isMaxFree ? 'Pro / Max License (Free)' : 'Pro / Max Checkout')
                     : modalTier === 'test'
                     ? 'Test Tier License'
                     : 'Solo Tier License'}
                 </span>
-                <h3 className="font-display text-xl font-bold text-ink">
+                <h3 id="pricing-modal-title" className="font-display text-xl font-bold text-ink">
                   {modalTier === 'max'
-                    ? 'Subscribe to Max (₹299)'
+                    ? (isMaxFree ? 'Get your Max license key' : 'Subscribe to Max (₹299)')
                     : 'Get your license key'}
                 </h3>
               </div>
               <button
                 onClick={handleCloseInputModal}
+                aria-label="Close dialog"
                 className="text-ink/40 hover:text-ink text-base font-mono p-1 rounded hover:bg-black/5"
               >
                 ✕
@@ -402,7 +452,7 @@ export default function PricingSection() {
             </div>
 
             <p className="font-body text-xs text-ink/75 mb-5 leading-relaxed">
-              {modalTier === 'max'
+              {modalTier === 'max' && !isMaxFree
                 ? 'Enter your work email and contact. You will be prompted with Razorpay to complete your monthly subscription.'
                 : 'Enter your email below. Your license key will be generated immediately with zero payment required.'}
             </p>
@@ -415,10 +465,11 @@ export default function PricingSection() {
 
             <form onSubmit={handleFormSubmit} className="space-y-4">
               <div>
-                <label className="block font-mono text-[11px] text-muted-on-light mb-1 font-semibold">
+                <label htmlFor="pricing-email" className="block font-mono text-[11px] text-muted-on-light mb-1 font-semibold">
                   Email Address *
                 </label>
                 <input
+                  id="pricing-email"
                   required
                   type="email"
                   value={email}
@@ -428,12 +479,13 @@ export default function PricingSection() {
                 />
               </div>
 
-              {modalTier === 'max' && (
+              {modalTier === 'max' && !isMaxFree && (
                 <div>
-                  <label className="block font-mono text-[11px] text-muted-on-light mb-1 font-semibold">
+                  <label htmlFor="pricing-phone" className="block font-mono text-[11px] text-muted-on-light mb-1 font-semibold">
                     Phone Number (for Razorpay UPI/SMS receipt)
                   </label>
                   <input
+                    id="pricing-phone"
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -450,10 +502,19 @@ export default function PricingSection() {
               >
                 {loading
                   ? 'Processing...'
-                  : modalTier === 'max'
+                  : modalTier === 'max' && !isMaxFree
                   ? 'Proceed to Payment (₹299) →'
                   : 'Generate License Key →'}
               </button>
+
+              <p className="font-mono text-[11px] text-center text-muted-on-light mt-3 leading-relaxed">
+                By proceeding, you agree to our{' '}
+                <Link href="/terms" className="underline underline-offset-2 hover:text-ink">Terms</Link>
+                ,{' '}
+                <Link href="/privacy" className="underline underline-offset-2 hover:text-ink">Privacy</Link>
+                , and{' '}
+                <Link href="/refund-policy" className="underline underline-offset-2 hover:text-ink">Refund Policy</Link>.
+              </p>
             </form>
           </div>
         </div>

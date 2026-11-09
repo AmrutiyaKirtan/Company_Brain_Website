@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const LIVE_STREAM_ITEMS = [
   { source: 'Slack', text: '“Refunds under $100 within 30 days don’t need finance approval.”', tag: 'slack-C04', color: '#4A154B' },
   { source: 'GitHub', text: '“PR #204: Add exponential backoff retry to BaseConnector ingest()”', tag: 'github#204', color: '#24292e' },
   { source: 'Notion', text: '“Engineering Runbook: Sev-1 escalation path & standby failover”', tag: 'notion:wiki', color: '#000000' },
   { source: 'Jira', text: '“PROD-882: Database latency spike resolved with read-replica”', tag: 'jira:882', color: '#0052CC' },
-  { source: 'Linear', text: '“Team roadmap: 38 enterprise connectors registered in registry.py”', tag: 'linear:core', color: '#5E6AD2' },
+  { source: 'Linear', text: '“Team roadmap: 39 enterprise connectors registered in registry.py”', tag: 'linear:core', color: '#5E6AD2' },
 ];
 
 const SYNTHESIZED_SKILLS = [
@@ -32,21 +32,66 @@ const SYNTHESIZED_SKILLS = [
 ];
 
 export default function HeroPipelineVisual() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [activeStreamIdx, setActiveStreamIdx] = useState(0);
   const [activeSkillIdx, setActiveSkillIdx] = useState(0);
 
   useEffect(() => {
-    const streamInterval = setInterval(() => {
-      setActiveStreamIdx((prev) => (prev + 1) % LIVE_STREAM_ITEMS.length);
-    }, 3200);
+    let streamInterval: NodeJS.Timeout | null = null;
+    let skillInterval: NodeJS.Timeout | null = null;
 
-    const skillInterval = setInterval(() => {
-      setActiveSkillIdx((prev) => (prev + 1) % SYNTHESIZED_SKILLS.length);
-    }, 4500);
+    const startIntervals = () => {
+      if (!streamInterval) {
+        streamInterval = setInterval(() => {
+          setActiveStreamIdx((prev) => (prev + 1) % LIVE_STREAM_ITEMS.length);
+        }, 3200);
+      }
+      if (!skillInterval) {
+        skillInterval = setInterval(() => {
+          setActiveSkillIdx((prev) => (prev + 1) % SYNTHESIZED_SKILLS.length);
+        }, 4500);
+      }
+    };
+
+    const stopIntervals = () => {
+      if (streamInterval) {
+        clearInterval(streamInterval);
+        streamInterval = null;
+      }
+      if (skillInterval) {
+        clearInterval(skillInterval);
+        skillInterval = null;
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stopIntervals();
+      } else {
+        startIntervals();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    let observer: IntersectionObserver | null = null;
+    if (containerRef.current && typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && !document.hidden) {
+          startIntervals();
+        } else {
+          stopIntervals();
+        }
+      }, { threshold: 0.05 });
+      observer.observe(containerRef.current);
+    } else {
+      startIntervals();
+    }
 
     return () => {
-      clearInterval(streamInterval);
-      clearInterval(skillInterval);
+      stopIntervals();
+      document.removeEventListener('visibilitychange', handleVisibility);
+      observer?.disconnect();
     };
   }, []);
 
@@ -54,7 +99,7 @@ export default function HeroPipelineVisual() {
   const currentSkill = SYNTHESIZED_SKILLS[activeSkillIdx];
 
   return (
-    <div className="w-full max-w-5xl mx-auto rounded-2xl border border-white/15 bg-black/60 backdrop-blur-xl shadow-2xl overflow-hidden text-left font-body">
+    <div ref={containerRef} className="w-full max-w-5xl mx-auto rounded-2xl border border-white/15 bg-black/60 backdrop-blur-xl shadow-2xl overflow-hidden text-left font-body">
       {/* Visual Window Header */}
       <div className="px-5 py-3.5 bg-white/[0.03] border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
@@ -87,7 +132,7 @@ export default function HeroPipelineVisual() {
             <span className="font-semibold text-white uppercase tracking-wider text-[11px]">
               01. Raw Data Streams
             </span>
-            <span className="text-white/40">38 Connectors</span>
+            <span className="text-white/40">39 Connectors</span>
           </div>
 
           <div className="p-4 rounded-xl border border-white/10 bg-white/[0.03] min-h-[140px] flex flex-col justify-between transition-all duration-300 shadow-sm">

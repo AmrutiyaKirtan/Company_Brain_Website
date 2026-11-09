@@ -17,7 +17,7 @@ export default function WhoItsForSection() {
     },
     {
       badge: 'PROFILE_D',
-      title: 'Distributed Teams Across 38+ SaaS Apps',
+      title: 'Distributed Teams Across 39 SaaS Apps',
       desc: 'Teams tired of hunting across Slack threads, Notion wikis, Linear backlogs, and Jira boards just to find out how a simple process works.',
     },
   ];

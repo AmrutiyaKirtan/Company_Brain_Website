@@ -389,7 +389,7 @@ export default function TerminalDemoSection() {
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-center text-xs">
                     <div className="p-2.5 bg-white/5 rounded border border-white/5">
                       <span className="text-white/40 block text-[10px]">CONNECTORS</span>
-                      <span className="font-bold text-white text-sm">38 Active</span>
+                      <span className="font-bold text-white text-sm">39 Active</span>
                     </div>
                     <div className="p-2.5 bg-white/5 rounded border border-white/5">
                       <span className="text-white/40 block text-[10px]">ITEMS INGESTED</span>

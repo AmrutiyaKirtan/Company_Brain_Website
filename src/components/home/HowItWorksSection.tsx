@@ -36,13 +36,13 @@ export default function HowItWorksSection() {
               className="bg-white/[0.03] border border-white/10 rounded-3xl p-8 relative flex flex-col justify-between"
             >
               <div>
-                <span className="font-mono text-3xl font-bold text-amber-400/80 mb-6 block">
+                <span className="font-mono text-3xl font-bold text-amber-400 mb-6 block">
                   {item.step}
                 </span>
                 <h3 className="font-display text-xl font-bold text-white mb-3">
                   {item.title}
                 </h3>
-                <p className="font-body text-sm sm:text-base text-white/70 leading-relaxed">
+                <p className="font-body text-sm sm:text-base text-white/80 leading-relaxed">
                   {item.desc}
                 </p>
               </div>

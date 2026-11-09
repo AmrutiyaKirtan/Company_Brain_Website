@@ -22,8 +22,13 @@ export const metadata: Metadata = {
 export default function DocsPage() {
   const commands = [
     {
+      cmd: 'ycb demo',
+      desc: 'Instant in-memory sandbox. Test questions and knowledge search across simulated company sources in 30 seconds with zero setup or credentials.',
+      example: 'ycb demo',
+    },
+    {
       cmd: 'ycb init',
-      desc: 'Prompts for your license key, checks Ollama (gemma4:e4b), creates .env config, and initializes SQLite tables.',
+      desc: 'Prompts for your license key, checks Ollama runtime or cloud providers, creates configuration, and initializes SQLite tables.',
     },
     {
       cmd: 'ycb connect <connector>',
@@ -96,9 +101,9 @@ export default function DocsPage() {
                 key={c.cmd}
                 className="bg-white border border-line-on-light rounded-2xl p-6 shadow-sm space-y-3"
               >
-                <div className="bg-[#14100c] text-white px-3.5 py-2 rounded-xl font-mono text-xs sm:text-sm border border-white/10 inline-block select-all">
-                  <span className="text-emerald-400 font-bold">$ </span>
-                  <span className="text-amber-200">{c.cmd}</span>
+                <div className="bg-[#14100c] text-white px-3.5 py-2 rounded-xl font-mono text-xs sm:text-sm border border-white/10 inline-flex items-center">
+                  <span className="text-emerald-400 font-bold select-none mr-2">$</span>
+                  <span className="text-amber-200 select-all">{c.cmd}</span>
                 </div>
                 <p className="font-body text-xs sm:text-sm text-ink/80 leading-relaxed">
                   {c.desc}
@@ -121,14 +126,14 @@ export default function DocsPage() {
                 Supported Tools
               </h3>
               <p className="font-body text-xs text-ink/70 leading-relaxed">
-                Browse all 38 connectors across chat, code, project management, and CRM.
+                Browse all 39 connectors across chat, code, project management, and CRM.
               </p>
             </div>
             <Link
               href="/connectors"
               className="text-xs font-mono font-semibold text-amber-700 hover:text-ink transition-colors flex items-center gap-1"
             >
-              <span>Explore 38 Connectors</span>
+              <span>Explore 39 Connectors</span>
               <span>&rarr;</span>
             </Link>
           </div>

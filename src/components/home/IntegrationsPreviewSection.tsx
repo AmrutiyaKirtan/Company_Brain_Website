@@ -29,7 +29,7 @@ export default function IntegrationsPreviewSection() {
           {featuredTools.map((tool) => (
             <div
               key={tool.slug}
-              className="bg-white border border-line-on-light rounded-2xl p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md transition-all duration-200"
+              className="bg-white border-2 border-line-on-light rounded-2xl p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow-md hover:border-ink/20 transition-all duration-200"
             >
               <div className="w-10 h-10 flex items-center justify-center text-ink/70">
                 <ConnectorIcon slug={tool.slug} className="w-8 h-8" />
@@ -47,7 +47,7 @@ export default function IntegrationsPreviewSection() {
             className="btn btn-secondary text-xs sm:text-sm py-3 px-6 rounded-full inline-flex items-center gap-2"
             data-cursor-label="ALL TOOLS"
           >
-            <span>Explore all 38 supported tools</span>
+            <span>Explore all 39 supported tools</span>
             <span>&rarr;</span>
           </Link>
         </div>

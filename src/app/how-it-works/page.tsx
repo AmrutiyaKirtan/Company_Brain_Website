@@ -10,14 +10,14 @@ import WhoItsForSection from '@/components/home/WhoItsForSection';
 export const metadata: Metadata = {
   title: 'How It Works',
   description:
-    'Explore the architecture of Your Company Brain: 38 unified connectors, local model inference by default, and terminal search for startup teams.',
+    'Explore the architecture of Your Company Brain: 39 unified connectors, local model inference by default, and terminal search for startup teams.',
   alternates: {
     canonical: 'https://yourcompanybrain.vercel.app/how-it-works',
   },
   openGraph: {
     title: 'How It Works | Your Company Brain',
     description:
-      'Explore the architecture of Your Company Brain: 38 unified connectors, local model inference by default, and terminal search for startup teams.',
+      'Explore the architecture of Your Company Brain: 39 unified connectors, local model inference by default, and terminal search for startup teams.',
     url: 'https://yourcompanybrain.vercel.app/how-it-works',
     siteName: 'Your Company Brain',
     locale: 'en_US',
@@ -43,7 +43,7 @@ export default function HowItWorksTechnicalPage() {
           </h1>
 
           <p className="font-body text-white/80 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            A local-first knowledge extraction pipeline that connects to 38 workspace tools, runs local models by default, and synthesizes structured procedures for autonomous agents.
+            A local-first knowledge extraction pipeline that connects to 39 workspace tools, runs local models by default, and synthesizes structured procedures for autonomous agents.
           </p>
 
           {/* Quick CLI Reference Box */}

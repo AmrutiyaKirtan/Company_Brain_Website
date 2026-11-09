@@ -49,7 +49,7 @@ export default function Nav() {
           </Link>
           <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono tracking-wider bg-white/10 text-white/90 border border-white/15 font-semibold shrink-0 whitespace-nowrap ml-1">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0 inline-block"></span>
-            <span>v3.2.2 • Local</span>
+            <span>v4.8.0 • Local-First</span>
           </div>
         </div>
 
@@ -108,7 +108,7 @@ export default function Nav() {
             </span>
             <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
-              <span>38 Connectors Active</span>
+              <span>39 Connectors Active</span>
             </div>
           </div>
           {navLinks.map((link) => (

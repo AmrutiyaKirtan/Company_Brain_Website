@@ -105,7 +105,7 @@ export default function WaitlistPage() {
                   <div className="text-[11px] text-ink/70">Runs on local metal (Ollama / Gemma)</div>
                 </div>
                 <div className="p-3 rounded-2xl bg-paper/60 border border-line-on-light text-center">
-                  <div className="text-amber-800 font-mono text-xs font-bold mb-1">38 Connectors</div>
+                  <div className="text-amber-800 font-mono text-xs font-bold mb-1">39 Connectors</div>
                   <div className="text-[11px] text-ink/70">Slack, Jira, Docs, GitHub, Linear</div>
                 </div>
                 <div className="p-3 rounded-2xl bg-paper/60 border border-line-on-light text-center">
@@ -175,7 +175,11 @@ export default function WaitlistPage() {
                 </button>
 
                 <p className="font-mono text-[11px] text-center text-muted-on-light pt-2">
-                  No credit card required &bull; Free tier included &bull; Unsubscribe anytime
+                  By submitting, you agree to our{' '}
+                  <Link href="/privacy" className="underline underline-offset-2 hover:text-ink transition-colors">
+                    Privacy Policy
+                  </Link>
+                  . Free tier included &bull; Unsubscribe anytime.
                 </p>
               </form>
             </>
@@ -244,7 +248,7 @@ export default function WaitlistPage() {
                   href="/connectors"
                   className="btn btn-primary text-xs py-2.5 px-5 rounded-xl w-full sm:w-auto text-center"
                 >
-                  Browse 38 Connectors &rarr;
+                  Browse 39 Connectors &rarr;
                 </Link>
               </div>
             </div>

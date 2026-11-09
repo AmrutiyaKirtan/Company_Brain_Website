@@ -27,11 +27,11 @@ export default function StatsSection() {
                 -95%
               </div>
               <h3 className="font-display font-semibold text-lg text-white mb-2">
-                Documentation Time
+                Documentation Time*
               </h3>
             </div>
             <p className="font-body text-xs sm:text-sm text-white/70 leading-relaxed">
-              Procedures that took 45 minutes to draft manually are synthesized and formatted in under 2 minutes.
+              *Based on internal testing: procedures that took 45 minutes to draft manually are synthesized and formatted in under 2 minutes.
             </p>
           </div>
 
@@ -41,7 +41,7 @@ export default function StatsSection() {
                 02 / CONNECTORS
               </span>
               <div className="font-display text-4xl sm:text-5xl font-bold text-white mb-2 tracking-tight">
-                38
+                39
               </div>
               <h3 className="font-display font-semibold text-lg text-white mb-2">
                 Enterprise Sources

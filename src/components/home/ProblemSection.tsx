@@ -44,7 +44,7 @@ export default function ProblemSection() {
 
                 <div className="space-y-1.5">
                   <h4 className="font-display font-semibold text-lg text-ink">
-                    Knowledge is locked in silos across 38 tools
+                    Knowledge is locked in silos across 39 tools
                   </h4>
                   <p className="font-body text-xs sm:text-sm text-muted-on-light leading-relaxed">
                     Critical edge cases live in a 6-month-old Slack thread, while the refund policy is split between HubSpot deal notes and Stripe docs.
@@ -80,7 +80,7 @@ export default function ProblemSection() {
 
                 <div className="space-y-1.5">
                   <h4 className="font-display font-semibold text-lg text-ink">
-                    Unified 38-connector offline knowledge base
+                    Unified 39-connector offline knowledge base
                   </h4>
                   <p className="font-body text-xs sm:text-sm text-ink/80 leading-relaxed">
                     A single natural-language query (<code>ycb --ask</code>) searches across Slack, GitHub, Linear, Jira, and Google Workspace in 300ms.

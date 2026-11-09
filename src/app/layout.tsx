@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Space_Grotesk, IBM_Plex_Mono, DM_Sans } from 'next/font/google';
-import Script from 'next/script';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import ScrollProgressBar from '@/components/ScrollProgressBar';
@@ -57,16 +56,16 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} ${dmSans.variable} antialiased`}
     >
-      <head>
-        <Script
-          src="https://checkout.razorpay.com/v1/checkout.js"
-          strategy="lazyOnload"
-        />
-      </head>
       <body className="min-h-screen bg-paper text-ink">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-ink focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none"
+        >
+          Skip to main content
+        </a>
         <ScrollProgressBar />
         <Nav />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <Footer />
         <CustomCursor />
       </body>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface LicenseModalProps {
   isOpen: boolean;
@@ -21,6 +21,15 @@ export default function LicenseModal({
 }: LicenseModalProps) {
   const [copiedKey, setCopiedKey] = useState(false);
   const [copiedCmd, setCopiedCmd] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -45,7 +54,12 @@ export default function LicenseModal({
       : 'Free Forever (Perpetual)';
 
   return (
-    <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="license-modal-title"
+      className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200"
+    >
       <div className="relative w-full max-w-lg bg-[#14100c] text-white border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden font-body">
         {/* Glow accent */}
         <div className="absolute top-0 right-1/4 w-48 h-48 bg-amber-500/10 blur-[80px] pointer-events-none rounded-full" />
@@ -57,7 +71,7 @@ export default function LicenseModal({
               ✓
             </div>
             <div>
-              <h3 className="font-display text-xl font-bold text-white">
+              <h3 id="license-modal-title" className="font-display text-xl font-bold text-white">
                 License Issued Successfully
               </h3>
               <p className="font-mono text-xs text-white/60">
@@ -67,6 +81,7 @@ export default function LicenseModal({
           </div>
           <button
             onClick={onClose}
+            aria-label="Close dialog"
             className="text-white/40 hover:text-white text-lg font-mono p-1 rounded-lg hover:bg-white/10 transition-colors"
           >
             ✕

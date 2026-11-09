@@ -39,14 +39,14 @@ export default function ConnectorsDirectory() {
               Connectors Directory
             </span>
             <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-100 text-emerald-800 border border-emerald-300 font-semibold">
-              38 Active Integrations
+              39 Active Integrations
             </span>
           </div>
           <h1 className="font-display text-ink text-4xl sm:text-5xl font-semibold tracking-tight mb-4">
             Connect every data source in your company.
           </h1>
           <p className="font-body text-muted-on-light text-base sm:text-lg max-w-[62ch] leading-relaxed">
-            All 38 connectors inherit our idempotent <code>BaseConnector</code> architecture with automatic exponential backoff, error isolation, and deduplication.
+            All 39 connectors inherit our idempotent <code>BaseConnector</code> architecture with automatic exponential backoff, error isolation, and deduplication.
           </p>
         </header>
 
@@ -61,7 +61,7 @@ export default function ConnectorsDirectory() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search 38 connectors, auth, or dedup keys..."
+              placeholder="Search 39 connectors, auth, or dedup keys..."
               className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-line-on-light-strong bg-white/70 backdrop-blur-sm text-sm text-ink placeholder:text-muted-on-light focus:outline-none focus:border-ink transition-colors font-body"
             />
             {searchQuery && (
@@ -77,7 +77,7 @@ export default function ConnectorsDirectory() {
           {/* Tier Filter Pills */}
           <div className="flex flex-wrap items-center gap-1.5 p-1 bg-paper-dark/60 rounded-xl border border-line-on-light">
             {[
-              { id: 'All', label: 'All (38)' },
+              { id: 'All', label: 'All (39)' },
               { id: 'Tier 1', label: 'Tier 1: Core Comms (11)' },
               { id: 'Tier 2', label: 'Tier 2: Dev & Search (10)' },
               { id: 'Tier 3', label: 'Tier 3: PM & Tracking (8)' },
@@ -100,11 +100,11 @@ export default function ConnectorsDirectory() {
 
         {/* Results Counter */}
         <div className="flex items-center justify-between text-xs font-mono text-muted-on-light mb-4 px-1">
-          <span>Showing {filteredConnectors.length} of 38 connectors</span>
+          <span>Showing {filteredConnectors.length} of 39 connectors</span>
           <span>Click any connector for schema & auth details</span>
         </div>
 
-        {/* 38 Connectors Grid */}
+        {/* 39 Connectors Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredConnectors.map((c) => (
             <div
@@ -195,9 +195,12 @@ export default function ConnectorsDirectory() {
 
                 <div className="p-3 bg-white/5 rounded-lg border border-white/10">
                   <span className="text-white/50 block text-[10px] uppercase mb-1">
-                    Enable in .env:
+                    CLI Connection Command:
                   </span>
-                  <code className="text-amber-300 text-xs">CONNECTORS_ENABLED={selectedConnector.slug}</code>
+                  <div className="flex items-center justify-between font-mono text-xs text-amber-300 bg-black/40 px-2.5 py-1.5 rounded select-all">
+                    <span>ycb connect {selectedConnector.slug}</span>
+                    <span className="text-[10px] text-white/40 uppercase tracking-wider select-none ml-2">Click to select</span>
+                  </div>
                 </div>
               </div>
 

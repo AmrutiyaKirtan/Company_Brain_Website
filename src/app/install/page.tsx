@@ -79,6 +79,25 @@ export default function InstallPage() {
           </p>
         </div>
 
+        {/* Fast Track Sandbox Callout */}
+        <div className="bg-white border-2 border-amber-500/30 rounded-2xl p-6 sm:p-8 mb-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-1 max-w-lg">
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono bg-amber-500/10 text-amber-800 border border-amber-500/20 font-bold uppercase tracking-wider mb-1">
+              ⚡ 30-Second Quickstart
+            </div>
+            <h2 className="font-display text-lg font-bold text-ink">
+              Try YCB instantly with zero configuration
+            </h2>
+            <p className="font-body text-xs sm:text-sm text-ink/75 leading-relaxed">
+              Run the interactive in-memory demo sandbox across simulated Slack and GitHub knowledge. Requires Python 3.10+ and zero API keys.
+            </p>
+          </div>
+          <div className="bg-[#14100c] text-white px-4 py-3 rounded-xl font-mono text-xs sm:text-sm border border-white/10 shrink-0 inline-flex items-center gap-2">
+            <span className="text-emerald-400 font-bold select-none">$</span>
+            <span className="text-amber-200 select-all">pip install ycb && ycb demo</span>
+          </div>
+        </div>
+
         {/* Steps */}
         <div className="space-y-6 mb-12">
           {steps.map((s) => (
@@ -101,9 +120,9 @@ export default function InstallPage() {
                 </p>
               </div>
 
-              <div className="bg-[#14100c] text-white px-4 py-3 rounded-xl font-mono text-xs sm:text-sm border border-white/10 shrink-0 select-all flex items-center gap-2">
-                <span className="text-emerald-400 font-bold">$</span>
-                <span className="text-amber-200">{s.cmd}</span>
+              <div className="bg-[#14100c] text-white px-4 py-3 rounded-xl font-mono text-xs sm:text-sm border border-white/10 shrink-0 flex items-center gap-2">
+                <span className="text-emerald-400 font-bold select-none">$</span>
+                <span className="text-amber-200 select-all">{s.cmd}</span>
               </div>
             </div>
           ))}
@@ -116,7 +135,7 @@ export default function InstallPage() {
               Need a license key or connector details?
             </h3>
             <p className="font-body text-xs sm:text-sm text-ink/70">
-              Get a free perpetual Solo license or browse all 38 supported workspace tools.
+              Get a free perpetual Solo license or browse all 39 supported workspace tools.
             </p>
           </div>
 

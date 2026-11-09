@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
 /* ─── Spring presets (Apple Design — critically damped) ──────── */
@@ -90,7 +91,7 @@ export default function DemoSection() {
           >
             Watch it in action.
           </h2>
-          <p className="font-body text-white/55 text-sm sm:text-base leading-relaxed mb-8 max-w-xl">
+          <p className="font-body text-white/80 text-sm sm:text-base leading-relaxed mb-8 max-w-xl">
             See Your Company Brain search across Slack, Notion, and GitHub — all on your own computer.
           </p>
 
@@ -107,20 +108,20 @@ export default function DemoSection() {
           >
             {/* Top chrome bar */}
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
-              <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-              <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-              <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-              <span className="ml-3 font-mono text-[11px] text-white/25 tracking-wide">
+              <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+              <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+              <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+              <span className="ml-3 font-mono text-[11px] text-white/60 tracking-wide">
                 YCB · Product Demo
               </span>
               <a
                 href="https://youtu.be/0OTAAECdEyI"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ml-auto font-mono text-[11px] text-amber-400/60 hover:text-amber-300 transition-colors flex items-center gap-1"
+                className="ml-auto font-mono text-[11px] text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1 font-medium"
               >
                 <span>Open in YouTube</span>
-                <span className="opacity-70">↗</span>
+                <span className="opacity-80">↗</span>
               </a>
             </div>
 
@@ -178,9 +179,9 @@ export default function DemoSection() {
               <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.08]"
                   style={{ letterSpacing: '-0.028em' }}>
                 Schedule a 15-minute{' '}
-                <span className="text-white/50">walkthrough.</span>
+                <span className="text-amber-300">walkthrough.</span>
               </h2>
-              <p className="font-body text-white/70 text-base sm:text-lg leading-relaxed max-w-md">
+              <p className="font-body text-white/80 text-base sm:text-lg leading-relaxed max-w-md">
                 See how YCB searches your workspace tools privately on your own computer. We&apos;ll answer any questions and help you get set up.
               </p>
             </div>
@@ -188,7 +189,7 @@ export default function DemoSection() {
             {/* Trust row */}
             <div className="flex flex-wrap gap-x-6 gap-y-2 pt-2">
               {['Runs locally by default', 'No credit card required', 'Private & secure'].map((tag) => (
-                <span key={tag} className="flex items-center gap-1.5 text-[12px] font-mono text-white/50">
+                <span key={tag} className="flex items-center gap-1.5 text-[12px] font-mono text-white/75 font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
                   {tag}
                 </span>
@@ -270,8 +271,8 @@ export default function DemoSection() {
                       >
                         Schedule a Guided Demo
                       </h3>
-                      <p className="text-[13px] text-white/45 leading-relaxed">
-                        We&apos;ll tailor it to your stack — Notion, Slack, GitHub, or all 38 connectors.
+                      <p className="text-[13px] text-white/75 leading-relaxed">
+                        We&apos;ll tailor it to your stack — Notion, Slack, GitHub, or all 39 connectors.
                       </p>
                     </div>
 
@@ -299,7 +300,7 @@ export default function DemoSection() {
                     {/* Fields */}
                     <div className="space-y-4">
                       {/* Name */}
-                      <FormField label="Your Name" hint="optional">
+                      <FormField label="Your Name" htmlFor="demo-name" hint="optional">
                         <input
                           type="text"
                           id="demo-name"
@@ -312,7 +313,7 @@ export default function DemoSection() {
                       </FormField>
 
                       {/* Email */}
-                      <FormField label="Work Email" required>
+                      <FormField label="Work Email" htmlFor="demo-email" required>
                         <input
                           required
                           type="email"
@@ -326,7 +327,7 @@ export default function DemoSection() {
                       </FormField>
 
                       {/* Message — auto-expanding, no scrollbar */}
-                      <FormField label="Message" hint="optional">
+                      <FormField label="Message" htmlFor="demo-message" hint="optional">
                         <textarea
                           ref={textareaRef}
                           id="demo-message"
@@ -372,8 +373,12 @@ export default function DemoSection() {
                       )}
                     </motion.button>
 
-                    <p className="mt-4 text-[11px] text-center font-mono text-white/25 tracking-wide">
-                      Zero spam · Local-first by default
+                    <p className="mt-4 text-[11px] text-center font-mono text-white/70 tracking-wide">
+                      By submitting, you agree to our{' '}
+                      <Link href="/privacy" className="underline underline-offset-2 hover:text-white transition-colors">
+                        Privacy Policy
+                      </Link>
+                      . Zero spam.
                     </p>
                   </motion.form>
                 )}
@@ -417,18 +422,23 @@ export default function DemoSection() {
 /* ── Small helper for label + field wrapper ── */
 function FormField({
   label,
+  htmlFor,
   required,
   hint,
   children,
 }: {
   label: string;
+  htmlFor?: string;
   required?: boolean;
   hint?: string;
   children: React.ReactNode;
 }) {
   return (
     <div>
-      <label className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-white/40 mb-2 font-medium">
+      <label
+        htmlFor={htmlFor}
+        className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-white/40 mb-2 font-medium"
+      >
         {label}
         {required && <span className="text-amber-500/60">*</span>}
         {hint && <span className="text-white/20 normal-case tracking-normal">{hint}</span>}

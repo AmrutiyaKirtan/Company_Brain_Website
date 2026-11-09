@@ -40,11 +40,11 @@ export default function WhyOfflineSection() {
               </div>
 
               <div className="space-y-6 pt-4">
-                {/* 38 Sources */}
+                {/* 39 Sources */}
                 <div className="p-4 rounded-xl bg-paper/60 border border-line-on-light">
                   <div className="flex items-center justify-between text-xs font-mono mb-2 text-muted-on-light">
                     <span>INGESTION LAYER</span>
-                    <span>38 Connectors</span>
+                    <span>39 Connectors</span>
                   </div>
                   <div className="flex flex-wrap gap-2 text-xs font-mono">
                     <span className="px-2.5 py-1 rounded bg-white border border-line-on-light text-ink font-medium">Slack</span>
@@ -52,7 +52,7 @@ export default function WhyOfflineSection() {
                     <span className="px-2.5 py-1 rounded bg-white border border-line-on-light text-ink font-medium">GitHub</span>
                     <span className="px-2.5 py-1 rounded bg-white border border-line-on-light text-ink font-medium">Jira</span>
                     <span className="px-2.5 py-1 rounded bg-white border border-line-on-light text-ink font-medium">Google Docs</span>
-                    <span className="px-2.5 py-1 rounded bg-white border border-line-on-light text-muted-on-light">+33 more</span>
+                    <span className="px-2.5 py-1 rounded bg-white border border-line-on-light text-muted-on-light">+34 more</span>
                   </div>
                 </div>
 
@@ -91,7 +91,7 @@ export default function WhyOfflineSection() {
 
               <div className="mt-6 pt-4 border-t border-line-on-light text-center">
                 <span className="font-mono text-xs text-emerald-800 font-semibold">
-                  ✓ 0 External API Calls • 0 Data Transmitted Outside Your Network
+                  ✓ 0 External API Calls by default • 0 Data Transmitted Outside Your Network (with local models)
                 </span>
               </div>
             </div>

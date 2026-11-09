@@ -1,17 +1,49 @@
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
 import Razorpay from 'razorpay';
 import { firebaseDb } from '@/lib/firebase/admin';
 
 export const dynamic = 'force-dynamic';
 
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 3;
+
 export async function POST(req: NextRequest) {
   try {
+    // --- IP Rate Limiting (3 order creation requests per minute) ---
+    const forwardedFor = req.headers.get('x-forwarded-for');
+    const realIp = req.headers.get('x-real-ip');
+    const clientIp = (forwardedFor ? forwardedFor.split(',')[0].trim() : realIp) || '127.0.0.1';
+    const ipHash = crypto.createHash('sha256').update(clientIp).digest('hex').slice(0, 16);
+    const rateLimitRef = firebaseDb.ref(`rate_limits/create_order/${ipHash}`);
+    const rateLimitSnap = await rateLimitRef.once('value');
+    const now = Date.now();
+    if (rateLimitSnap.exists()) {
+      const rateData = rateLimitSnap.val();
+      if (now < rateData.reset_at) {
+        if (rateData.count >= MAX_REQUESTS_PER_WINDOW) {
+          return NextResponse.json(
+            { error: 'Too many payment attempts. Please wait a minute before trying again.' },
+            { status: 429 }
+          );
+        }
+        await rateLimitRef.update({ count: (rateData.count || 0) + 1 });
+      } else {
+        await rateLimitRef.set({ count: 1, reset_at: now + RATE_LIMIT_WINDOW_MS });
+      }
+    } else {
+      await rateLimitRef.set({ count: 1, reset_at: now + RATE_LIMIT_WINDOW_MS });
+    }
+
     const { email, phone } = await req.json();
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: 'Valid email address is required' }, { status: 400 });
     }
 
+    // NOTE: NEXT_PUBLIC_RAZORPAY_KEY_ID is intentionally public.
+    // Razorpay's client SDK requires the key_id on the frontend to initialise the checkout.
+    // Only RAZORPAY_KEY_SECRET must remain server-side.
     const key_id = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
     const key_secret = process.env.RAZORPAY_KEY_SECRET;
 

@@ -5,14 +5,14 @@ import PricingSection from '@/components/home/PricingSection';
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'Explore plans for Your Company Brain. Free perpetual Solo license, Max plan with all 38 connectors, and custom Enterprise plans.',
+    'Explore plans for Your Company Brain. Free perpetual Solo license, Max plan with all 39 connectors, and custom Enterprise plans.',
   alternates: {
     canonical: 'https://yourcompanybrain.vercel.app/pricing',
   },
   openGraph: {
     title: 'Pricing | Your Company Brain',
     description:
-      'Explore plans for Your Company Brain. Free perpetual Solo license, Max plan with all 38 connectors, and custom Enterprise plans.',
+      'Explore plans for Your Company Brain. Free perpetual Solo license, Max plan with all 39 connectors, and custom Enterprise plans.',
     url: 'https://yourcompanybrain.vercel.app/pricing',
     siteName: 'Your Company Brain',
     locale: 'en_US',

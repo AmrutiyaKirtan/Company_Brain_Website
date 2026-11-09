@@ -65,16 +65,16 @@ export default function AboutPage() {
 
           <div className="bg-white border border-line-on-light rounded-2xl p-6 sm:p-8 shadow-sm">
             <h2 className="font-display text-xl font-bold text-ink mb-3">
-              Connected across 38 tools
+              Connected across 39 tools
             </h2>
             <p className="font-body text-sm sm:text-base text-ink/75 leading-relaxed mb-4">
-              Integrates with 38 workspace tools across Core Comms &amp; Code, Dev &amp; Search, Project Management, and CRM &amp; Enterprise HR.
+              Integrates with 39 workspace tools across Core Comms &amp; Code, Dev &amp; Search, Project Management, and CRM &amp; Enterprise HR.
             </p>
             <Link
               href="/connectors"
               className="text-xs font-mono font-semibold text-amber-700 hover:text-ink transition-colors inline-flex items-center gap-1"
             >
-              <span>View all 38 connectors</span>
+              <span>View all 39 connectors</span>
               <span>&rarr;</span>
             </Link>
           </div>

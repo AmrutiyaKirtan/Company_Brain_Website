@@ -16,7 +16,7 @@ const PIPELINE_STEPS: PipelineStep[] = [
   {
     stepNumber: '01',
     badge: 'DATA LAYER',
-    title: 'Ingestion & 38 Connectors',
+    title: 'Ingestion & 39 Connectors',
     shortDesc:
       'Pulls raw documents, messages, issues, and customer tickets through a unified BaseConnector interface with error isolation.',
     technicalDetails: [
@@ -38,7 +38,7 @@ const PIPELINE_STEPS: PipelineStep[] = [
                     source=DataSourceType.SLACK,
                     content=msg['text']
                 )`,
-    metric: '38 Connectors • 0 Duplicates',
+    metric: '39 Connectors • 0 Duplicates',
   },
   {
     stepNumber: '02',
@@ -155,7 +155,7 @@ export default function PipelineSection() {
             The 5-stage knowledge synthesis pipeline.
           </h2>
           <p className="font-body text-white/70 text-base sm:text-lg max-w-[55ch]">
-            Engineered from the ground up for privacy, idempotency, and high-accuracy extraction across 38 enterprise platforms.
+            Engineered from the ground up for privacy, idempotency, and high-accuracy extraction across 39 enterprise platforms.
           </p>
         </div>
 

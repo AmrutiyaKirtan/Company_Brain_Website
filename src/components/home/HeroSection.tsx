@@ -31,7 +31,7 @@ export default function HeroSection() {
         </p>
 
         {/* Single Main CTA */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-14">
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-6">
           <Link
             href="#pricing"
             className="btn btn-primary-dark w-full sm:w-auto px-8 py-3.5 rounded-full text-xs sm:text-sm tracking-wider font-semibold shadow-2xl"
@@ -46,6 +46,15 @@ export default function HeroSection() {
           >
             Join Early Access &rarr;
           </Link>
+        </div>
+
+        {/* Quickstart Command for Developers */}
+        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-white/[0.06] border border-white/15 backdrop-blur-md mb-12 text-xs font-mono shadow-inner">
+          <span className="text-emerald-400 font-bold select-none">$</span>
+          <span className="text-amber-200 select-all font-medium">pip install ycb && ycb demo</span>
+          <span className="text-[10px] uppercase tracking-wider text-white/50 border-l border-white/10 pl-2.5 hidden sm:inline">
+            30s offline trial
+          </span>
         </div>
 
         {/* Illustrative Product Mockup Preview (Clean Example Card) */}
